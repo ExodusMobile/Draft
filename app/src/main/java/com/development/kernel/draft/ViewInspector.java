@@ -73,6 +73,8 @@ class ViewInspector {
             case 1: //изменить ширину
                 try {
                     button.setWidth(Integer.valueOf(editText.getText().toString()));
+                    editText.setVisibility(View.GONE);
+                    buttonEdit.setVisibility(View.GONE);
                 }
                 catch (Exception e) {
                     Toast.makeText(mainActivity,"Неверный формат ввода",Toast.LENGTH_SHORT).show();
@@ -82,6 +84,7 @@ class ViewInspector {
                 try {
                     button.setHeight(Integer.valueOf(editText.getText().toString()));
                     editText.setVisibility(View.GONE); //удалить editText
+                    buttonEdit.setVisibility(View.GONE);
                 }
                 catch (Exception e) {
                     Toast.makeText(mainActivity,"Неверный формат ввода",Toast.LENGTH_SHORT).show();
@@ -90,15 +93,14 @@ class ViewInspector {
             case 3: //изменить название
                 button.setText(editText.getText().toString());
                 editText.setVisibility(View.GONE);
+                buttonEdit.setVisibility(View.GONE);
                 break;
             case 4: //удалить view элемент с экрана
-                button.setVisibility(View.GONE);
-                CountButtonsTags--; //понизить тег, чтобы предотвартить ошибку
+                CountButtonsTags--; //понизить тег, чтобы предотратить ошибку
                 break;
 
         }
-        editText.setVisibility(View.GONE);
-        buttonEdit.setVisibility(View.GONE);
+
         return button; //возвратить view элемент со всеми настройками
     }
 
@@ -130,7 +132,6 @@ class ViewInspector {
                 buttonEdit.setVisibility(View.GONE);
                 break;
             case 4:
-                textView.setVisibility(View.GONE);
                 CountTextViewTags--;//понижение тега
                 break;
 
