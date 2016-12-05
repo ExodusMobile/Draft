@@ -1,5 +1,6 @@
 package com.development.kernel.draft;
 
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -20,9 +21,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int countOfButtons=0;
     private int countOfTextViews=0;
     private int ID;
-    private boolean checkElement;
+    private Object tag;
     private EditText editText;
     private Button button;
+    private TagControl tagControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(this);
         viewInspector = new ViewInspector(layoutParams, linearLayout,this); //создаем экземпляр нашего класса
-
+        tagControl = new TagControl(ID,buttons,textViews);
     }
 
     @Override
@@ -70,22 +72,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-            try {
-                if (v.getTag().equals(buttons[v.getId()].getTag())) {
-                    checkElement = true;
-                }
-                else {
-                    checkElement = false;
-                }
-            }
-            catch (Exception e) {
-                checkElement = false;
-            }
-        menu.add(0, 1, 0, "Изменить ширину");
-        menu.add(0, 2, 0, "Изменить высоту");
+
+        if(tagControl.isButtonTag(v))
+        {
+            editText.setText(buttons[ID].getText().toString());
+            menu.add(0, 3, 0, "Изменить ширину");
+            menu.add(0, 4 ,0, "Удалить высоту");
+        }
+        else {editText.setText(textViews[ID].getText().toString());}
         menu.add(0, 3, 0, "Изменить текст");
         menu.add(0, 4 ,0, "Удалить объект");
         ID = v.getId();
+        tag =  v.getTag();
     }
 
     @Override
@@ -93,18 +91,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewInspector.setContextOptions(item);
         editText.setVisibility(View.VISIBLE);
         button.setVisibility(View.VISIBLE);
+
         return super.onContextItemSelected(item);
 
     }
 
     @Override
     public void onClick(View view) {
-        if(!checkElement) {
 
+        if (tagControl.isTextViewTag(tag)) {
             textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
-        }
-        else {
+        } else {
             buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
         }
+
+
     }
 }

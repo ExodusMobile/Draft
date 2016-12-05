@@ -93,6 +93,7 @@ class ViewInspector {
                 break;
             case 4:
                 button.setVisibility(View.GONE);
+                CountButtonsTags--;
                 break;
 
         }
@@ -130,6 +131,7 @@ class ViewInspector {
                 break;
             case 4:
                 textView.setVisibility(View.GONE);
+                CountTextViewTags--;
                 break;
 
         }
