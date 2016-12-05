@@ -90,12 +90,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewInspector.setContextOptions(item);
         if(item.getItemId() == 4)
         {
-            if (tag.equals(textViews[ID].getTag())) {
-                textViews[ID].setVisibility(View.GONE);
+            try {
+                if (tag.equals(textViews[ID].getTag())) {
+                    textViews[ID].setVisibility(View.GONE);
+                }
+                else {buttons[ID].setVisibility(View.GONE);}
             }
-            else {
-                buttons[ID].setVisibility(View.GONE);
-            }
+            catch (Exception e){buttons[ID].setVisibility(View.GONE);}
         }
         else {
             editText.setVisibility(View.VISIBLE);
