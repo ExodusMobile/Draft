@@ -37,12 +37,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText = (EditText) findViewById(R.id.edit_text);
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(this);
-        viewInspector = new ViewInspector(layoutParams, linearLayout,this); //создаем экземпляр нашего класса
+        viewInspector = new ViewInspector(layoutParams, linearLayout, this); //создаем экземпляр нашего класса
         tagControl = new TagControl(ID,buttons,textViews);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) { //назначаем элементы для меню
         menu.add(0,1,0,"Кнопка");
         menu.add(0,2,0,"Строка");
         menu.add(0,3,0,"Изображение");
@@ -57,13 +57,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 1:
                 buttons[countOfButtons] = viewInspector.setDefaultViewOptions(new Button(this)); //создаем кнопку и назначаем ей начальные найтроки в viewInspector
                 registerForContextMenu(buttons[countOfButtons]);
-                countOfButtons++;
+                countOfButtons++; //прибавляем к индексу 1 массива кнопок
                 break;
 
             case 2:
                 textViews[countOfTextViews] = viewInspector.setDefaultViewOptions(new TextView(this));// точно также с textView
                 registerForContextMenu(textViews[countOfTextViews]);
-                countOfTextViews++;
+                countOfTextViews++; //прибавляем к индексу 1 массива строк
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -73,24 +73,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        if(tagControl.isButtonTag(v))
+        if(tagControl.isButtonTag(v)) //проверяем, удерживают ли палец на кнопке или нет
         {
             editText.setText(buttons[ID].getText().toString());
             menu.add(0, 3, 0, "Изменить ширину");
             menu.add(0, 4 ,0, "Удалить высоту");
         }
-        else {editText.setText(textViews[ID].getText().toString());}
+        else {editText.setText(textViews[ID].getText().toString());} // если нет, то не вставляем доп. меню в контесктное меню
         menu.add(0, 3, 0, "Изменить текст");
         menu.add(0, 4 ,0, "Удалить объект");
-        ID = v.getId();
-        tag =  v.getTag();
+        ID = v.getId(); //сохраняем ID нажатого view элемента
+        tag =  v.getTag();//cсохраняем tag нажатого view элемента
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         viewInspector.setContextOptions(item);
-        editText.setVisibility(View.VISIBLE);
-        button.setVisibility(View.VISIBLE);
+        editText.setVisibility(View.VISIBLE); //делаем видимым редактор настроек view элементов
+        button.setVisibility(View.VISIBLE); //делаем видимой кнопку "подтвердить"
 
         return super.onContextItemSelected(item);
 
@@ -99,12 +99,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-        if (tagControl.isTextViewTag(tag)) {
+        if (tagControl.isTextViewTag(tag)) { //если тег строки
             textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
-        } else {
+        } else { //соотвественно, если тег кнопки
             buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
         }
-
+        //TODO: добавить больше view элементов и их реализацию в viewInspector
 
     }
 }

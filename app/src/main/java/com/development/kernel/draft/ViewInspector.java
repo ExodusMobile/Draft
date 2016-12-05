@@ -26,7 +26,7 @@ class ViewInspector {
     private int WIS;
     private MainActivity mainActivity;
 
-    ViewInspector(LayoutParams layoutParams, LinearLayout linearLayout, MainActivity mainActivity) {
+    ViewInspector(LayoutParams layoutParams, LinearLayout linearLayout, MainActivity mainActivity) { //инициализация обязательных параметров
         this.viewParams = layoutParams;
         this.linearLayout = linearLayout;
         this.mainActivity = mainActivity;
@@ -55,22 +55,22 @@ class ViewInspector {
         return textView;
     }
 
-    public ImageView setDefaultViewOptions(ImageView imageView) {
+    public ImageView setDefaultViewOptions(ImageView imageView) { //TODO: реализовать метод setDefaultViewOptions
         imageView.setLayoutParams(viewParams);
         linearLayout.addView(imageView);
         return imageView;
     }
 
-    void setContextOptions(MenuItem item)
+    void setContextOptions(MenuItem item)//запись выбранного элемента в контекстном меню в переменную
     {
         WIS = item.getItemId();
     }
 
-    Button setPropertiesForView(Button button, EditText editText, Button buttonEdit)
+    Button setPropertiesForView(Button button, EditText editText, Button buttonEdit) //настройки для кнопки
     {
         switch (WIS)
         {
-            case 1:
+            case 1: //изменить ширину
                 try {
                     button.setWidth(Integer.valueOf(editText.getText().toString()));
                 }
@@ -78,31 +78,31 @@ class ViewInspector {
                     Toast.makeText(mainActivity,"Неверный формат ввода",Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case 2:
+            case 2: //изменить высоту
                 try {
                     button.setHeight(Integer.valueOf(editText.getText().toString()));
-                    editText.setVisibility(View.GONE);
+                    editText.setVisibility(View.GONE); //удалить editText
                 }
                 catch (Exception e) {
                     Toast.makeText(mainActivity,"Неверный формат ввода",Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case 3:
+            case 3: //изменить название
                 button.setText(editText.getText().toString());
                 editText.setVisibility(View.GONE);
                 break;
-            case 4:
+            case 4: //удалить view элемент с экрана
                 button.setVisibility(View.GONE);
-                CountButtonsTags--;
+                CountButtonsTags--; //понизить тег, чтобы предотвартить ошибку
                 break;
 
         }
         editText.setVisibility(View.GONE);
         buttonEdit.setVisibility(View.GONE);
-        return button;
+        return button; //возвратить view элемент со всеми настройками
     }
 
-    TextView setPropertiesForView(TextView textView, EditText editText, Button buttonEdit)
+    TextView setPropertiesForView(TextView textView, EditText editText, Button buttonEdit)//настройки для строки
     {
         switch (WIS)
         {
@@ -131,12 +131,12 @@ class ViewInspector {
                 break;
             case 4:
                 textView.setVisibility(View.GONE);
-                CountTextViewTags--;
+                CountTextViewTags--;//понижение тега
                 break;
 
         }
         editText.setVisibility(View.GONE);
         buttonEdit.setVisibility(View.GONE);
-        return textView;
+        return textView; //возвратить view элемент со всеми настройками
     }
 }
