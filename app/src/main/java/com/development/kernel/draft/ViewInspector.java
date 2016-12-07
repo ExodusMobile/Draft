@@ -106,26 +106,10 @@ class ViewInspector {
 
     TextView setPropertiesForView(TextView textView, EditText editText, Button buttonEdit)//настройки для строки
     {
+
         switch (WIS)
         {
-            case 1:
-                try {
-                    textView.setWidth(Integer.valueOf(editText.getText().toString()));
-                }
-                catch (Exception e) {
-                    Toast.makeText(mainActivity,"Неверный формат ввода",Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case 2:
-                try {
-                    textView.setHeight(Integer.valueOf(editText.getText().toString()));
-                    editText.setVisibility(View.GONE);
-                    textView.setVisibility(View.GONE);
-                }
-                catch (Exception e) {
-                    Toast.makeText(mainActivity,"Неверный формат ввода",Toast.LENGTH_SHORT).show();
-                }
-                break;
+
             case 3:
                 textView.setText(editText.getText().toString());
                 editText.setVisibility(View.GONE);
@@ -136,8 +120,7 @@ class ViewInspector {
                 break;
 
         }
-        editText.setVisibility(View.GONE);
-        buttonEdit.setVisibility(View.GONE);
+
         return textView; //возвратить view элемент со всеми настройками
     }
 }
