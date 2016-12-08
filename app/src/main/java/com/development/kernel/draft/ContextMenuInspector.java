@@ -1,5 +1,7 @@
 package com.development.kernel.draft;
 
+import android.text.InputType;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,27 +29,38 @@ class ContextMenuInspector {
             {
                     menu.add(0, 5, 0, "Импорт из галереи");
                     menu.add(0, 6, 0, "Сделать снимок");
+                    menu.add(0, 7, 0, "Изменить размеры");
                     menu.add(0, 4, 0, "Удалить объект");
             }
         return menu;
     }
     void setContextMenuItemsOptions(MenuItem item,Object tag, TextView[] textViews, ImageView[] imageViews,
-                                    Button[] buttons, ViewInspector viewInspector, int ID, EditText editText, Button button) {
-        if (item.getItemId() == 4 || item.getItemId() == 5 || item.getItemId() == 6) {
-                if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) {
-                    textViews[ID].setVisibility(View.GONE);
-                }
+                                    Button[] buttons, int ID, EditText editText, EditText editText1, Button button, Button button1) {
+        if (item.getItemId() == 4 || item.getItemId() == 5 || item.getItemId() == 6 || item.getItemId() == 7 || item.getItemId() == 8) {
+
+                if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) textViews[ID].setVisibility(View.GONE);
+
                 if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag())) {
                         if (item.getItemId() == 4) imageViews[ID].setVisibility(View.GONE);
-                        else imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID]);
+                        else if(item.getItemId() == 7 || item.getItemId() == 8){
+                            button1.setVisibility(View.VISIBLE);
+                            editText.setHint("Высота (Минимальные размеры: 300px)");
+                            editText1.setHint("Ширина (Минимальные размеры: 300px)");
+                            editText1.setInputType(InputType.TYPE_CLASS_PHONE);
+                            editText.setInputType(InputType.TYPE_CLASS_PHONE);
+                            editText.setVisibility(View.VISIBLE);
+                            editText1.setVisibility(View.VISIBLE);
+                            button.setVisibility(View.VISIBLE);
+                        }
                 }
-                if(buttons[ID] != null && tag.equals(buttons[ID].getTag())) {
-                     buttons[ID].setVisibility(View.GONE);
-                }
+
+                if(buttons[ID] != null && tag.equals(buttons[ID].getTag())) buttons[ID].setVisibility(View.GONE);
+
         }
         else {
             editText.setVisibility(View.VISIBLE);
             button.setVisibility(View.VISIBLE);
+            button1.setVisibility(View.VISIBLE);
         }
     }
 }

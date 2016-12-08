@@ -1,5 +1,8 @@
 package com.development.kernel.draft;
 
+import android.net.Uri;
+import android.text.InputType;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout.LayoutParams;
@@ -9,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 class ViewInspector {
 
@@ -82,8 +87,6 @@ class ViewInspector {
             case 1: //изменить ширину
                 try {
                     button.setWidth(Integer.valueOf(editText.getText().toString()));
-                    editText.setVisibility(View.GONE);
-                    buttonEdit.setVisibility(View.GONE);
                 }
                 catch (Exception e) {
                     Toast.makeText(mainActivity,"Неверный формат ввода",Toast.LENGTH_SHORT).show();
@@ -92,8 +95,6 @@ class ViewInspector {
             case 2: //изменить высоту
                 try {
                     button.setHeight(Integer.valueOf(editText.getText().toString()));
-                    editText.setVisibility(View.GONE); //удалить editText
-                    buttonEdit.setVisibility(View.GONE);
                 }
                 catch (Exception e) {
                     Toast.makeText(mainActivity,"Неверный формат ввода",Toast.LENGTH_SHORT).show();
@@ -101,8 +102,6 @@ class ViewInspector {
                 break;
             case 3: //изменить название
                 button.setText(editText.getText().toString());
-                editText.setVisibility(View.GONE);
-                buttonEdit.setVisibility(View.GONE);
                 break;
             case 4: //удалить view элемент с экрана
                 CountButtonsTags--; //понизить тег, чтобы предотратить ошибку
@@ -136,10 +135,18 @@ class ViewInspector {
         return textView; //возвратить view элемент со всеми настройками
     }
 
-    ImageView setPropertiesForView(ImageView imageView) //настройки для строки
+    ImageView setPropertiesForView(ImageView imageView, Uri selectImage, EditText editText, EditText editText1, Button button) //настройки для строки
     {
         switch (WIS)
         {
+            case 7:
+                try {
+                    Picasso.with(mainActivity).load(selectImage).resize(Integer.valueOf(editText1.getText().toString()), Integer.valueOf(editText.getText().toString())).into(imageView);
+                }
+                catch (Exception e) {
+                    Toast.makeText(mainActivity,"Неверый формат ввода", Toast.LENGTH_SHORT).show();
+                }
+                break;
             case 4:
                 CountImageViewTags--;//понижение тега
                 break;

@@ -22,6 +22,12 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/edit_text1"
+        android:inputType="textMultiLine" />
 
     <EditText
         android:layout_width="match_parent"
@@ -36,5 +42,13 @@
         android:id="@+id/button"
         android:visibility="gone"
         android:text="Подтвердить"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:id="@+id/button_close"
+        android:visibility="gone"
+        android:text="Закрыть"/>
 
  </LinearLayout>

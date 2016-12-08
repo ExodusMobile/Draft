@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static final int GALLERY_REQUEST = 1;
     static final int CAMERA_REQUEST = 2;
 
+    private Uri selectImagePublic = null;
+
     private ViewInspector viewInspector;
     private Button[] buttons;
     private TextView[] textViews;
@@ -33,7 +35,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int ID;
     private Object tag;
     private EditText editText;
+    private EditText editText1;
     private Button button;
+    private Button button1;
     private ContextMenuInspector contextMenuInspector;
 
     @Override
@@ -46,8 +50,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViews = new TextView[99];
         imageViews = new ImageView[99];
         editText = (EditText) findViewById(R.id.edit_text);
+        editText1 = (EditText) findViewById(R.id.edit_text1);
         button = (Button) findViewById(R.id.button);
+        button1 = (Button) findViewById(R.id.button_close);
         button.setOnClickListener(this);
+        button1.setOnClickListener(this);
         viewInspector = new ViewInspector(layoutParams, linearLayout, this); //создаем экземпляр нашего класса
     }
 
@@ -84,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
+        editText1.setVisibility(View.GONE);
+        button1.setVisibility(View.GONE);
+        button.setVisibility(View.GONE);
+        editText.setVisibility(View.GONE);
         contextMenuInspector = new ContextMenuInspector();
         contextMenuInspector.setContentMenuOptions(menu, v, buttons, textViews, imageViews);
         ID = v.getId();
@@ -93,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         viewInspector.setContextOptions(item);
-        contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons, viewInspector, ID, editText, button);
+        contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons, ID, editText, editText1,button, button1);
         if(item.getItemId() == 5) {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
@@ -111,13 +122,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
                 if(resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
-                    Picasso.with(this).load(selectedImage).resize(600, 600).into(imageViews[ID]);
+                    selectImagePublic = selectedImage;
+                    Picasso.with(this)
+                            .load(selectedImage)
+                            .resize(600, 600)
+                            .into(imageViews[ID]);
                 }
     }
     @Override
     public void onClick(View view) {
-        if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
-        else buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
+        switch (view.getId()) {
+            case R.id.button:
+            if (textViews[ID] != null && tag.equals(textViews[ID].getTag()))
+                textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
+            else if (buttons[ID] != null && tag.equals(buttons[ID].getTag()))
+                buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
+            else
+                imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], selectImagePublic, editText, editText1, button);
+                break;
+            case R.id.button_close:
+                editText1.setVisibility(View.GONE);
+                button1.setVisibility(View.GONE);
+                button.setVisibility(View.GONE);
+                editText.setVisibility(View.GONE);
+                break;
+        }
     }
 }
 
