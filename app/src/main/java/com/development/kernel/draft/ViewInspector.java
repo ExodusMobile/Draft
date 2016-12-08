@@ -66,8 +66,9 @@ class ViewInspector {
     ImageView setDefaultViewOptions(ImageView imageView) {
         imageView.setLayoutParams(viewParams);
         linearLayout.addView(imageView);
-        imageView.setMinimumWidth(100);
-        imageView.setMinimumHeight(100);
+        imageView.setMinimumWidth(300);
+        imageView.setMinimumHeight(300);
+        Picasso.with(mainActivity).load(R.drawable.rectangle).resize(500,500).into(imageView);
         String imageViewsTags = "ImageView:";
         imageView.setId(imageViewsId);
         imageView.setTag(imageViewsTags + String.valueOf(CountImageViewTags++));
@@ -144,7 +145,7 @@ class ViewInspector {
                     Picasso.with(mainActivity).load(selectImage).resize(Integer.valueOf(editText1.getText().toString()), Integer.valueOf(editText.getText().toString())).into(imageView);
                 }
                 catch (Exception e) {
-                    Toast.makeText(mainActivity,"Неверый формат ввода", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mainActivity,"Неверный формат ввода", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 4:

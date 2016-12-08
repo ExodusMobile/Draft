@@ -1,6 +1,7 @@
 package com.development.kernel.draft;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -40,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button button1;
     private ContextMenuInspector contextMenuInspector;
 
+    SharedPreferences sPref;
+
+    private final int SaveViews = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
         super.onCreate(savedInstanceState);
@@ -57,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button1.setOnClickListener(this);
         viewInspector = new ViewInspector(layoutParams, linearLayout, this); //создаем экземпляр нашего класса
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 1, 0, "Кнопка");
@@ -129,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             .into(imageViews[ID]);
                 }
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
