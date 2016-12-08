@@ -1,8 +1,9 @@
 package com.development.kernel.draft;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,14 +15,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    static final int GALLERY_REQUEST = 1;
 
     private ViewInspector viewInspector;
     private Button[] buttons;
     private TextView[] textViews;
     private ImageView[] imageViews;
-
-
     private int countOfButtons = 0;
     private int countOfTextViews = 0;
     private int countOfImageViews = 0;
@@ -44,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(this);
         viewInspector = new ViewInspector(layoutParams, linearLayout, this); //создаем экземпляр нашего класса
-
     }
 
     @Override
@@ -64,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 registerForContextMenu(buttons[countOfButtons]);
                 countOfButtons++;
                 break;
-
             case 2:
                 textViews[countOfTextViews] = viewInspector.setDefaultViewOptions(new TextView(this));// точно также с textView
                 registerForContextMenu(textViews[countOfTextViews]);
@@ -74,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 imageViews[countOfImageViews] = viewInspector.setDefaultViewOptions(new ImageView(this));
                 registerForContextMenu(imageViews[countOfImageViews]);
                 countOfImageViews++;
-                Log.d("ImageViewTest", "work of this metod");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -84,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreateContextMenu(menu, v, menuInfo);
         contextMenuInspector = new ContextMenuInspector();
         contextMenuInspector.setContentMenuOptions(menu, v, buttons, textViews, imageViews);
-
         ID = v.getId();
         tag = v.getTag();
     }
@@ -92,23 +92,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         viewInspector.setContextOptions(item);
-        contextMenuInspector.setContextMenuItemsOptions(item,tag,textViews,imageViews,buttons,viewInspector,ID,editText,button);
+        contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons, viewInspector, ID, editText, button);
+        if(item.getItemId() == 5) {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+        }
         return super.onContextItemSelected(item);
-
     }
-
     @Override
-    public void onClick(View view) {
-        try {
-            if (tag.equals(textViews[ID].getTag())) {
-                textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
-            } else {
-                buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
-            }
-        } catch (Exception e) {
-            buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        switch(requestCode) {
+            case GALLERY_REQUEST:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    Picasso.with(this)
+                            .load(selectedImage)
+                            .resize(600,600)
+                            .into(imageViews[ID]);
+                }
         }
     }
-
+    @Override
+    public void onClick(View view) {
+        if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
+        else buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
+    }
 }
 

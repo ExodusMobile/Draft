@@ -1,6 +1,5 @@
 package com.development.kernel.draft;
 
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,14 +31,13 @@ class ContextMenuInspector {
     }
     void setContextMenuItemsOptions(MenuItem item,Object tag, TextView[] textViews, ImageView[] imageViews,
                                     Button[] buttons, ViewInspector viewInspector, int ID, EditText editText, Button button) {
-        Log.d("test",String.valueOf(item.getItemId()));
         if (item.getItemId() == 4 || item.getItemId() == 5) {
                 if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) {
                     textViews[ID].setVisibility(View.GONE);
                 }
                 if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag())) {
                         if (item.getItemId() == 4) imageViews[ID].setVisibility(View.GONE);
-                        else imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], editText, button);
+                        else imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID]);
                 }
                 if(buttons[ID] != null && tag.equals(buttons[ID].getTag())) {
                      buttons[ID].setVisibility(View.GONE);

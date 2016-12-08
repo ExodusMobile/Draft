@@ -1,8 +1,5 @@
 package com.development.kernel.draft;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout.LayoutParams;
@@ -14,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 class ViewInspector {
-    static final int GALLERY_REQUEST = 1;
 
     private LayoutParams viewParams = null;
     private LinearLayout linearLayout = null;
@@ -62,11 +58,11 @@ class ViewInspector {
         return textView;
     }
 
-    public ImageView setDefaultViewOptions(ImageView imageView) { //TODO: реализовать метод setDefaultViewOptions
+    ImageView setDefaultViewOptions(ImageView imageView) {
         imageView.setLayoutParams(viewParams);
         linearLayout.addView(imageView);
-        imageView.setMinimumWidth(1080);
-        imageView.setMinimumHeight(300);
+        imageView.setMinimumWidth(100);
+        imageView.setMinimumHeight(100);
         String imageViewsTags = "ImageView:";
         imageView.setId(imageViewsId);
         imageView.setTag(imageViewsTags + String.valueOf(CountImageViewTags++));
@@ -111,9 +107,7 @@ class ViewInspector {
             case 4: //удалить view элемент с экрана
                 CountButtonsTags--; //понизить тег, чтобы предотратить ошибку
                 break;
-
         }
-
         return button; //возвратить view элемент со всеми настройками
     }
 
@@ -133,15 +127,13 @@ class ViewInspector {
         return textView; //возвратить view элемент со всеми настройками
     }
 
-    ImageView setPropertiesForView(ImageView imageView, EditText editText, Button buttonEdit) //настройки для строки
+    ImageView setPropertiesForView(ImageView imageView) //настройки для строки
     {
         switch (WIS)
         {
-
             case 4:
                 CountImageViewTags--;//понижение тега
                 break;
-
         }
         return imageView; //возвратить view элемент со всеми настройками
     }
