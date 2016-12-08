@@ -20,18 +20,20 @@ class ContextMenuInspector {
             if(textViews[v.getId()] != null && v.getTag().equals(textViews[v.getId()].getTag()))
             {
                     menu.add(0, 1, 0, "Изменить текст");
+                    menu.add(0, 2, 0,"Изменить размер текста");
                     menu.add(0, 4, 0, "Удалить объект");
             }
             if(imageViews[v.getId()] != null && v.getTag().equals(imageViews[v.getId()].getTag()))
             {
                     menu.add(0, 5, 0, "Импорт из галереи");
+                    menu.add(0, 6, 0, "Сделать снимок");
                     menu.add(0, 4, 0, "Удалить объект");
             }
         return menu;
     }
     void setContextMenuItemsOptions(MenuItem item,Object tag, TextView[] textViews, ImageView[] imageViews,
                                     Button[] buttons, ViewInspector viewInspector, int ID, EditText editText, Button button) {
-        if (item.getItemId() == 4 || item.getItemId() == 5) {
+        if (item.getItemId() == 4 || item.getItemId() == 5 || item.getItemId() == 6) {
                 if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) {
                     textViews[ID].setVisibility(View.GONE);
                 }

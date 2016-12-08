@@ -117,13 +117,22 @@ class ViewInspector {
         {
             case 1:
                 textView.setText(editText.getText().toString());
-                editText.setVisibility(View.GONE);
-                buttonEdit.setVisibility(View.GONE);
+
+                break;
+            case 2:
+                try {
+                    textView.setTextSize(Integer.valueOf(editText.getText().toString()));
+                }
+                catch (Exception e) {
+                    Toast.makeText(mainActivity,"Неверный формат ввода",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case 4:
                 CountTextViewTags--;//понижение тега
                 break;
         }
+        editText.setVisibility(View.GONE);
+        buttonEdit.setVisibility(View.GONE);
         return textView; //возвратить view элемент со всеми настройками
     }
 

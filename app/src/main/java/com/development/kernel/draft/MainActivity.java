@@ -2,6 +2,7 @@ package com.development.kernel.draft;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -17,10 +18,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     static final int GALLERY_REQUEST = 1;
+    static final int CAMERA_REQUEST = 2;
 
     private ViewInspector viewInspector;
     private Button[] buttons;
@@ -98,21 +99,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             photoPickerIntent.setType("image/*");
             startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
         }
+        else if(item.getItemId() == 6)
+        {
+            Intent photoPickerIntent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(photoPickerIntent1, CAMERA_REQUEST);
+        }
         return super.onContextItemSelected(item);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        switch(requestCode) {
-            case GALLERY_REQUEST:
-                if(resultCode == RESULT_OK){
+                if(resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
-                    Picasso.with(this)
-                            .load(selectedImage)
-                            .resize(600,600)
-                            .into(imageViews[ID]);
+                    Picasso.with(this).load(selectedImage).resize(600, 600).into(imageViews[ID]);
                 }
-        }
     }
     @Override
     public void onClick(View view) {
