@@ -1,29 +1,35 @@
 package com.development.kernel.draft;
 
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ViewInspector viewInspector;
     private Button[] buttons;
     private TextView[] textViews;
-    private int countOfButtons=0;
-    private int countOfTextViews=0;
+    private ImageView[] imageViews;
+
+
+    private int countOfButtons = 0;
+    private int countOfTextViews = 0;
+    private int countOfImageViews = 0;
     private int ID;
     private Object tag;
     private EditText editText;
     private Button button;
+    private ContextMenuInspector contextMenuInspector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
@@ -33,26 +39,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         buttons = new Button[99];
         textViews = new TextView[99];
+        imageViews = new ImageView[99];
         editText = (EditText) findViewById(R.id.edit_text);
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(this);
-        viewInspector = new ViewInspector(layoutParams, linearLayout,this); //создаем экземпляр нашего класса
+        viewInspector = new ViewInspector(layoutParams, linearLayout, this); //создаем экземпляр нашего класса
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0,1,0,"Кнопка");
-        menu.add(0,2,0,"Строка");
-        menu.add(0,3,0,"Изображение");
-        menu.add(0,4,0,"Макетный холст");
+        menu.add(0, 1, 0, "Кнопка");
+        menu.add(0, 2, 0, "Строка");
+        menu.add(0, 3, 0, "Изображение");
+        menu.add(0, 4, 0, "Макетный холст");
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case 1:
                 buttons[countOfButtons] = viewInspector.setDefaultViewOptions(new Button(this)); //создаем кнопку и назначаем ей начальные найтроки в viewInspector
                 registerForContextMenu(buttons[countOfButtons]);
@@ -64,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 registerForContextMenu(textViews[countOfTextViews]);
                 countOfTextViews++;
                 break;
+            case 3:
+                imageViews[countOfImageViews] = viewInspector.setDefaultViewOptions(new ImageView(this));
+                registerForContextMenu(imageViews[countOfImageViews]);
+                countOfImageViews++;
+                Log.d("ImageViewTest", "work of this metod");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -71,37 +82,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-            try {
-                if (v.getTag().equals(buttons[v.getId()].getTag())) {
-                    menu.add(0, 1, 0, "Изменить ширину");
-                    menu.add(0, 2, 0, "Изменить высоту");
-                }
-            }
-            catch (Exception ignored){}
+        contextMenuInspector = new ContextMenuInspector();
+        contextMenuInspector.setContentMenuOptions(menu, v, buttons, textViews, imageViews);
 
-        menu.add(0, 3, 0, "Изменить текст");
-        menu.add(0, 4 ,0, "Удалить объект");
         ID = v.getId();
-        tag =  v.getTag();
+        tag = v.getTag();
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         viewInspector.setContextOptions(item);
-        if(item.getItemId() == 4)
-        {
-            try {
-                if (tag.equals(textViews[ID].getTag())) {
-                    textViews[ID].setVisibility(View.GONE);
-                }
-                else {buttons[ID].setVisibility(View.GONE);}
-            }
-            catch (Exception e){buttons[ID].setVisibility(View.GONE);}
-        }
-        else {
-            editText.setVisibility(View.VISIBLE);
-            button.setVisibility(View.VISIBLE);
-        }
+        contextMenuInspector.setContextMenuItemsOptions(item,tag,textViews,imageViews,buttons,viewInspector,ID,editText,button);
         return super.onContextItemSelected(item);
 
     }
@@ -111,13 +102,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             if (tag.equals(textViews[ID].getTag())) {
                 textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
-            }
-            else {
+            } else {
                 buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
         }
     }
+
 }
+

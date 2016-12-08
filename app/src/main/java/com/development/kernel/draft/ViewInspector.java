@@ -1,8 +1,11 @@
 package com.development.kernel.draft;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 class ViewInspector {
-
+    static final int GALLERY_REQUEST = 1;
 
     private LayoutParams viewParams = null;
     private LinearLayout linearLayout = null;
@@ -23,8 +26,12 @@ class ViewInspector {
     private int CountTextViewTags = 0;
     private int textViewsId = 0;
 
+    private int CountImageViewTags =0;
+    private int imageViewsId=0;
+
     private int WIS;
     private MainActivity mainActivity;
+
 
     ViewInspector(LayoutParams layoutParams, LinearLayout linearLayout, MainActivity mainActivity) { //инициализация обязательных параметров
         this.viewParams = layoutParams;
@@ -58,6 +65,12 @@ class ViewInspector {
     public ImageView setDefaultViewOptions(ImageView imageView) { //TODO: реализовать метод setDefaultViewOptions
         imageView.setLayoutParams(viewParams);
         linearLayout.addView(imageView);
+        imageView.setMinimumWidth(1080);
+        imageView.setMinimumHeight(300);
+        String imageViewsTags = "ImageView:";
+        imageView.setId(imageViewsId);
+        imageView.setTag(imageViewsTags + String.valueOf(CountImageViewTags++));
+        imageViewsId++;
         return imageView;
     }
 
@@ -106,11 +119,9 @@ class ViewInspector {
 
     TextView setPropertiesForView(TextView textView, EditText editText, Button buttonEdit)//настройки для строки
     {
-
         switch (WIS)
         {
-
-            case 3:
+            case 1:
                 textView.setText(editText.getText().toString());
                 editText.setVisibility(View.GONE);
                 buttonEdit.setVisibility(View.GONE);
@@ -118,9 +129,21 @@ class ViewInspector {
             case 4:
                 CountTextViewTags--;//понижение тега
                 break;
-
         }
-
         return textView; //возвратить view элемент со всеми настройками
     }
+
+    ImageView setPropertiesForView(ImageView imageView, EditText editText, Button buttonEdit) //настройки для строки
+    {
+        switch (WIS)
+        {
+
+            case 4:
+                CountImageViewTags--;//понижение тега
+                break;
+
+        }
+        return imageView; //возвратить view элемент со всеми настройками
+    }
+
 }
