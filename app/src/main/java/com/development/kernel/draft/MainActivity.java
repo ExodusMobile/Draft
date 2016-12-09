@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,9 +33,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button[] buttons;
     private TextView[] textViews;
     private ImageView[] imageViews;
+    private CardView[] cardViews;
     private int countOfButtons = 0;
     private int countOfTextViews = 0;
     private int countOfImageViews = 0;
+    private int countOfCardViews = 0;
     private int ID;
     private Object tag;
     private EditText editText;
@@ -42,9 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button button1;
     private ContextMenuInspector contextMenuInspector;
 
-    SharedPreferences sPref;
-
-    private final int SaveViews = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttons = new Button[99];
         textViews = new TextView[99];
         imageViews = new ImageView[99];
+        cardViews = new CardView[99];
         editText = (EditText) findViewById(R.id.edit_text);
         editText1 = (EditText) findViewById(R.id.edit_text1);
         button = (Button) findViewById(R.id.button);
@@ -86,9 +88,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 countOfTextViews++;
                 break;
             case 3:
+                Log.d("ff","fd");
                 imageViews[countOfImageViews] = viewInspector.setDefaultViewOptions(new ImageView(this));
                 registerForContextMenu(imageViews[countOfImageViews]);
                 countOfImageViews++;
+                break;
+            case 4:
+                Log.d("ff","23232");
+                cardViews[countOfCardViews] = viewInspector.setDefaultViewOptions(new CardView(this));
+                registerForContextMenu(cardViews[countOfCardViews]);
+                countOfCardViews++;
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -101,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setVisibility(View.GONE);
         editText.setVisibility(View.GONE);
         contextMenuInspector = new ContextMenuInspector();
-        contextMenuInspector.setContentMenuOptions(menu, v, buttons, textViews, imageViews);
+        contextMenuInspector.setContentMenuOptions(menu, v, buttons, textViews, imageViews,cardViews);
         ID = v.getId();
         tag = v.getTag();
     }
@@ -109,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         viewInspector.setContextOptions(item);
-        contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons, ID, editText, editText1,button, button1);
+        contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons, cardViews, ID, editText, editText1,button, button1);
         if(item.getItemId() == 5) {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
@@ -143,8 +153,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
             else if (buttons[ID] != null && tag.equals(buttons[ID].getTag()))
                 buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
-            else
+            else if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag()))
                 imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], selectImagePublic, editText, editText1, button);
+            else  cardViews[ID] = viewInspector.setPropertiesForView(cardViews[ID], editText,editText1,button);
                 break;
             case R.id.button_close:
                 editText1.setVisibility(View.GONE);

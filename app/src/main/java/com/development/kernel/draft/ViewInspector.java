@@ -1,6 +1,8 @@
 package com.development.kernel.draft;
 
 import android.net.Uri;
+import android.os.Build;
+import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,12 +25,14 @@ class ViewInspector {
     private int buttonsId = 0;
     private int CountButtonsTags = 0;
 
-
     private int CountTextViewTags = 0;
     private int textViewsId = 0;
 
     private int CountImageViewTags =0;
-    private int imageViewsId=0;
+    private int imageViewsId = 0;
+
+    private int CountCardViewTags = 0;
+    private int cardViewsId = 0;
 
     private int WIS;
     private MainActivity mainActivity;
@@ -76,6 +80,22 @@ class ViewInspector {
         return imageView;
     }
 
+    CardView setDefaultViewOptions(CardView cardView)
+    {
+        cardView.setLayoutParams(viewParams);
+        linearLayout.addView(cardView);
+        cardView.setMinimumWidth(1080);
+        cardView.setMinimumHeight(500);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cardView.setElevation(10f);
+        }
+        String cardViewsTags = "CardView:";
+        cardView.setId(cardViewsId);
+        cardView.setTag(cardViewsTags + String.valueOf(CountCardViewTags++));
+        cardViewsId++;
+        return cardView;
+    }
+
     void setContextOptions(MenuItem item)//запись выбранного элемента в контекстном меню в переменную
     {
         WIS = item.getItemId();
@@ -116,11 +136,13 @@ class ViewInspector {
         switch (WIS)
         {
             case 1:
+
                 textView.setText(editText.getText().toString());
 
                 break;
             case 2:
                 try {
+                    editText.setInputType(InputType.TYPE_CLASS_PHONE);
                     textView.setTextSize(Integer.valueOf(editText.getText().toString()));
                 }
                 catch (Exception e) {
@@ -153,6 +175,18 @@ class ViewInspector {
                 break;
         }
         return imageView; //возвратить view элемент со всеми настройками
+    }
+
+    CardView setPropertiesForView(CardView cardView, EditText editText, EditText editText1, Button button) //настройки для строки
+    {
+        switch (WIS)
+        {
+
+            case 4:
+                CountImageViewTags--;//понижение тега
+                break;
+        }
+        return cardView; //возвратить view элемент со всеми настройками
     }
 
 }
