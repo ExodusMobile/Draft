@@ -1,9 +1,7 @@
 package com.development.kernel.draft;
 
-import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +34,6 @@ class ContextMenuInspector {
             }
             if(cardViews[v.getId()] != null && v.getTag().equals(cardViews[v.getId()].getTag()))
             {
-                    menu.add(0,10,0,"Добавить картинку");
                     menu.add(0,4,0,"Удалить объект");
             }
 
@@ -44,7 +41,7 @@ class ContextMenuInspector {
     }
     void setContextMenuItemsOptions(MenuItem item,Object tag, TextView[] textViews, ImageView[] imageViews,
                                     Button[] buttons, CardView[] cardViews, int ID, EditText editText, EditText editText1, Button button, Button button1) {
-        if (item.getItemId() == 1 || item.getItemId() == 2 || item.getItemId() == 10 || item.getItemId() == 4 || item.getItemId() == 5 || item.getItemId() == 6 || item.getItemId() == 7 || item.getItemId() == 8) {
+        if (item.getItemId() == 1 || item.getItemId() == 2 || item.getItemId() == 3|| item.getItemId() == 10 || item.getItemId() == 4 || item.getItemId() == 5 || item.getItemId() == 6 || item.getItemId() == 7 || item.getItemId() == 8) {
 
                 if (textViews[ID] != null && tag.equals(textViews[ID].getTag()))
                 {
@@ -77,13 +74,24 @@ class ContextMenuInspector {
                         }
                 }
 
-                if(buttons[ID] != null && tag.equals(buttons[ID].getTag())) buttons[ID].setVisibility(View.GONE);
+                if(buttons[ID] != null && tag.equals(buttons[ID].getTag())) {
+                    if (item.getItemId() == 3) {
+                        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+                        editText.setVisibility(View.VISIBLE);
+                        button.setVisibility(View.VISIBLE);
+                         button1.setVisibility(View.VISIBLE);
+                    } else if(item.getItemId() == 1 || item.getItemId() == 2) {
+                        editText.setVisibility(View.VISIBLE);
+                        button.setVisibility(View.VISIBLE);
+                         button1.setVisibility(View.VISIBLE);
+                        editText.setInputType(InputType.TYPE_CLASS_PHONE);
+                    }
+                    else buttons[ID].setVisibility(View.GONE);
+                }
                 if(cardViews[ID] != null && tag.equals(cardViews[ID].getTag()))
                 {
                     if(item.getItemId() == 4) cardViews[ID].setVisibility(View.GONE);
                 }
-
-
         }
         else {
             editText.setVisibility(View.VISIBLE);

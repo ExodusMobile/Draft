@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Draft</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="facebook_app_id">1174188409333861</string>
 </resources>

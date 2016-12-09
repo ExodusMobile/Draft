@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(item.getItemId() == 10)
         {
-            viewInspector.setPropertiesForView(cardViews[ID], ID);
+            viewInspector.setPropertiesForView(cardViews[ID]);
         }
         return super.onContextItemSelected(item);
     }
@@ -161,9 +161,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (textViews[ID] != null && tag.equals(textViews[ID].getTag()))
                 textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
             else if (buttons[ID] != null && tag.equals(buttons[ID].getTag()))
-                buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
+                buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText);
             else if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag()))
-                imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], selectImagePublic, editText, editText1, button);
+                imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], selectImagePublic, editText, editText1);
                 break;
             case R.id.button_close:
                 editText1.setVisibility(View.GONE);

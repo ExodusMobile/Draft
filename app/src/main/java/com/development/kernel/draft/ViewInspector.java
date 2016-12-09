@@ -1,11 +1,9 @@
 package com.development.kernel.draft;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout.LayoutParams;
@@ -101,7 +99,6 @@ class ViewInspector {
             cardView.setElevation(10f);
         }
         countOfLinearLayouts++;
-        String cardViewsTags = "CardView:";
         cardView.setId(cardViewsId);
         cardView.setTag(CountCardViewTags++);
         cardViewsId++;
@@ -113,7 +110,7 @@ class ViewInspector {
         WIS = item.getItemId();
     }
 
-    Button setPropertiesForView(Button button, EditText editText, Button buttonEdit) //настройки для кнопки
+    Button setPropertiesForView(Button button, EditText editText) //настройки для кнопки
     {
         switch (WIS)
         {
@@ -170,7 +167,7 @@ class ViewInspector {
         return textView; //возвратить view элемент со всеми настройками
     }
 
-    ImageView setPropertiesForView(ImageView imageView, Uri selectImage, EditText editText, EditText editText1, Button button) //настройки для строки
+    ImageView setPropertiesForView(ImageView imageView, Uri selectImage, EditText editText, EditText editText1) //настройки для строки
     {
         switch (WIS)
         {
@@ -189,16 +186,12 @@ class ViewInspector {
         return imageView; //возвратить view элемент со всеми настройками
     }
 
-    CardView setPropertiesForView(CardView cardView, int ID) //настройки для строки
+    CardView setPropertiesForView(CardView cardView) //настройки для строки
     {
         switch (WIS)
         {
-            case 10:
-                ImageView imageView;
-                linearLayouts[ID].addView(imageView = new ImageView(mainActivity));
-                    Log.d("case 10", "work");
-                    Picasso.with(mainActivity).load(R.drawable.rectangle).resize(360,360).into(imageView);
-                break;
+
+
 
             case 4:
                 CountImageViewTags--;//понижение тега
