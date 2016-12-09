@@ -1,5 +1,6 @@
 package com.development.kernel.draft;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.widget.CardView;
@@ -37,11 +38,14 @@ class ViewInspector {
     private int WIS;
     private MainActivity mainActivity;
 
+    private int countOfLinearLayouts = 0;
+    private LinearLayout[] linearLayouts;
 
-    ViewInspector(LayoutParams layoutParams, LinearLayout linearLayout, MainActivity mainActivity) { //инициализация обязательных параметров
+    ViewInspector(LayoutParams layoutParams, LinearLayout linearLayout, LinearLayout[] linearLayouts, MainActivity mainActivity) { //инициализация обязательных параметров
         this.viewParams = layoutParams;
         this.linearLayout = linearLayout;
         this.mainActivity = mainActivity;
+        this.linearLayouts = linearLayouts;
     }
 
     Button setDefaultViewOptions(Button button) {  //назначает начальные настройки кнопке и тексту перегружен (2)
@@ -85,13 +89,21 @@ class ViewInspector {
         cardView.setLayoutParams(viewParams);
         linearLayout.addView(cardView);
         cardView.setMinimumWidth(1080);
-        cardView.setMinimumHeight(500);
+        cardView.setMinimumHeight(360);
+
+        LayoutParams layoutParams1 = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        linearLayouts[countOfLinearLayouts] = new LinearLayout(mainActivity);
+        linearLayouts[countOfLinearLayouts].setOrientation(LinearLayout.HORIZONTAL);
+        linearLayouts[countOfLinearLayouts].setLayoutParams(layoutParams1);
+        linearLayouts[countOfLinearLayouts].setId(CountCardViewTags);
+        cardView.addView(linearLayouts[countOfLinearLayouts]);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cardView.setElevation(10f);
         }
+        countOfLinearLayouts++;
         String cardViewsTags = "CardView:";
         cardView.setId(cardViewsId);
-        cardView.setTag(cardViewsTags + String.valueOf(CountCardViewTags++));
+        cardView.setTag(CountCardViewTags++);
         cardViewsId++;
         return cardView;
     }
@@ -146,7 +158,7 @@ class ViewInspector {
                     textView.setTextSize(Integer.valueOf(editText.getText().toString()));
                 }
                 catch (Exception e) {
-                    Toast.makeText(mainActivity,"Неверный формат ввода",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mainActivity, "Неверный формат ввода", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 4:
@@ -177,10 +189,16 @@ class ViewInspector {
         return imageView; //возвратить view элемент со всеми настройками
     }
 
-    CardView setPropertiesForView(CardView cardView, EditText editText, EditText editText1, Button button) //настройки для строки
+    CardView setPropertiesForView(CardView cardView, int ID) //настройки для строки
     {
         switch (WIS)
         {
+            case 10:
+                ImageView imageView;
+                linearLayouts[ID].addView(imageView = new ImageView(mainActivity));
+                    Log.d("case 10", "work");
+                    Picasso.with(mainActivity).load(R.drawable.rectangle).resize(360,360).into(imageView);
+                break;
 
             case 4:
                 CountImageViewTags--;//понижение тега

@@ -44,7 +44,7 @@ class ContextMenuInspector {
     }
     void setContextMenuItemsOptions(MenuItem item,Object tag, TextView[] textViews, ImageView[] imageViews,
                                     Button[] buttons, CardView[] cardViews, int ID, EditText editText, EditText editText1, Button button, Button button1) {
-        if (item.getItemId() == 1 || item.getItemId() == 2 || item.getItemId() == 4 || item.getItemId() == 5 || item.getItemId() == 6 || item.getItemId() == 7 || item.getItemId() == 8) {
+        if (item.getItemId() == 1 || item.getItemId() == 2 || item.getItemId() == 10 || item.getItemId() == 4 || item.getItemId() == 5 || item.getItemId() == 6 || item.getItemId() == 7 || item.getItemId() == 8) {
 
                 if (textViews[ID] != null && tag.equals(textViews[ID].getTag()))
                 {

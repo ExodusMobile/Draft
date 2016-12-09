@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button button1;
     private ContextMenuInspector contextMenuInspector;
 
+    private LinearLayout[] linearLayouts;
+    private ImageView[] imageViews1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
@@ -57,13 +60,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViews = new TextView[99];
         imageViews = new ImageView[99];
         cardViews = new CardView[99];
+        linearLayouts = new LinearLayout[99];
         editText = (EditText) findViewById(R.id.edit_text);
         editText1 = (EditText) findViewById(R.id.edit_text1);
         button = (Button) findViewById(R.id.button);
         button1 = (Button) findViewById(R.id.button_close);
         button.setOnClickListener(this);
         button1.setOnClickListener(this);
-        viewInspector = new ViewInspector(layoutParams, linearLayout, this); //создаем экземпляр нашего класса
+        viewInspector = new ViewInspector(layoutParams, linearLayout, linearLayouts, this); //создаем экземпляр нашего класса
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,8 +134,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent photoPickerIntent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(photoPickerIntent1, CAMERA_REQUEST);
         }
+        else if(item.getItemId() == 10)
+        {
+            viewInspector.setPropertiesForView(cardViews[ID], ID);
+        }
         return super.onContextItemSelected(item);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
@@ -155,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText, button);
             else if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag()))
                 imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], selectImagePublic, editText, editText1, button);
-            else  cardViews[ID] = viewInspector.setPropertiesForView(cardViews[ID], editText,editText1,button);
                 break;
             case R.id.button_close:
                 editText1.setVisibility(View.GONE);
