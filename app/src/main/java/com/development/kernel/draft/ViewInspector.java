@@ -6,6 +6,7 @@ import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,14 +88,16 @@ class ViewInspector {
         cardView.setLayoutParams(viewParams);
         linearLayout.addView(cardView);
         cardView.setMinimumWidth(1080);
-        cardView.setMinimumHeight(360);
+        cardView.setMinimumHeight(500);
 
         LayoutParams layoutParams1 = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        HorizontalScrollView horizontalScrollView = new HorizontalScrollView(mainActivity);
         linearLayouts[countOfLinearLayouts] = new LinearLayout(mainActivity);
         linearLayouts[countOfLinearLayouts].setOrientation(LinearLayout.HORIZONTAL);
         linearLayouts[countOfLinearLayouts].setLayoutParams(layoutParams1);
         linearLayouts[countOfLinearLayouts].setId(CountCardViewTags);
-        cardView.addView(linearLayouts[countOfLinearLayouts]);
+        horizontalScrollView.addView(linearLayouts[countOfLinearLayouts]);
+        cardView.addView(horizontalScrollView);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cardView.setElevation(10f);
         }
@@ -102,6 +105,7 @@ class ViewInspector {
         cardView.setId(cardViewsId);
         cardView.setTag(CountCardViewTags++);
         cardViewsId++;
+
         return cardView;
     }
 
@@ -186,13 +190,14 @@ class ViewInspector {
         return imageView; //возвратить view элемент со всеми настройками
     }
 
-    CardView setPropertiesForView(CardView cardView) //настройки для строки
+    CardView setPropertiesForView(CardView cardView, ImageView[] imageViews, int ID) //настройки для строки
     {
         switch (WIS)
         {
-
-
-
+            case 10:
+                linearLayouts[ID].addView(imageViews[ID] = new ImageView(mainActivity));
+                Picasso.with(mainActivity).load(R.drawable.rectangle).resize(360,360).into(imageViews[ID]);
+                break;
             case 4:
                 CountImageViewTags--;//понижение тега
                 break;

@@ -34,6 +34,7 @@ class ContextMenuInspector {
             }
             if(cardViews[v.getId()] != null && v.getTag().equals(cardViews[v.getId()].getTag()))
             {
+                    menu.add(0,10,0, "Добавить картинку");
                     menu.add(0,4,0,"Удалить объект");
             }
 

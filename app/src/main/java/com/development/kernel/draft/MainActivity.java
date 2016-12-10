@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private LinearLayout[] linearLayouts;
     private ImageView[] imageViews1;
+    private int xSize = 600, ySize = 600;
 
 
     @Override
@@ -61,12 +62,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageViews = new ImageView[99];
         cardViews = new CardView[99];
         linearLayouts = new LinearLayout[99];
+        imageViews1 = new ImageView[297];
         editText = (EditText) findViewById(R.id.edit_text);
         editText1 = (EditText) findViewById(R.id.edit_text1);
         button = (Button) findViewById(R.id.button);
         button1 = (Button) findViewById(R.id.button_close);
         button.setOnClickListener(this);
         button1.setOnClickListener(this);
+
         viewInspector = new ViewInspector(layoutParams, linearLayout, linearLayouts, this); //создаем экземпляр нашего класса
     }
     @Override
@@ -136,7 +139,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(item.getItemId() == 10)
         {
-            viewInspector.setPropertiesForView(cardViews[ID]);
+            viewInspector.setPropertiesForView(cardViews[ID], imageViews, ID);
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+            xSize = 360;
+            ySize = 360;
         }
         return super.onContextItemSelected(item);
     }
@@ -149,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selectImagePublic = selectedImage;
                     Picasso.with(this)
                             .load(selectedImage)
-                            .resize(600, 600)
+                            .resize(360, 400)
                             .into(imageViews[ID]);
                 }
     }
