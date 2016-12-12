@@ -1,13 +1,11 @@
 package com.development.kernel.draft;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,24 +43,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button button;
     private Button button1;
     private ContextMenuInspector contextMenuInspector;
-
-    private LinearLayout[] linearLayouts;
-    private ImageView[] imageViews1;
-    private int xSize = 600, ySize = 600;
-
+    private LinearLayout hintLayout;
+    private LinearLayout linearLayout1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.android_main_context);
+        linearLayout1 = (LinearLayout) findViewById(R.id.linear_layout);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0,200,0,0);
         buttons = new Button[99];
         textViews = new TextView[99];
         imageViews = new ImageView[99];
         cardViews = new CardView[99];
-        linearLayouts = new LinearLayout[99];
-        imageViews1 = new ImageView[297];
+        LinearLayout[] linearLayouts = new LinearLayout[99];
         editText = (EditText) findViewById(R.id.edit_text);
         editText1 = (EditText) findViewById(R.id.edit_text1);
         button = (Button) findViewById(R.id.button);
@@ -70,10 +66,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(this);
         button1.setOnClickListener(this);
 
+        hintLayout = (LinearLayout) findViewById(R.id.hint_layout);
+
+
         viewInspector = new ViewInspector(layoutParams, linearLayout, linearLayouts, this); //создаем экземпляр нашего класса
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         menu.add(0, 1, 0, "Кнопка");
         menu.add(0, 2, 0, "Строка");
         menu.add(0, 3, 0, "Изображение");
@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        hintLayout.setVisibility(View.GONE);
+        Toast.makeText(this,"Отлично! А теперь удерживайте палец на элементе и измените его настройки =)", Toast.LENGTH_LONG).show();
         switch (item.getItemId()) {
             case 1:
                 buttons[countOfButtons] = viewInspector.setDefaultViewOptions(new Button(this)); //создаем кнопку и назначаем ей начальные найтроки в viewInspector
@@ -95,13 +97,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 countOfTextViews++;
                 break;
             case 3:
-                Log.d("ff","fd");
                 imageViews[countOfImageViews] = viewInspector.setDefaultViewOptions(new ImageView(this));
                 registerForContextMenu(imageViews[countOfImageViews]);
                 countOfImageViews++;
                 break;
             case 4:
-                Log.d("ff","23232");
                 cardViews[countOfCardViews] = viewInspector.setDefaultViewOptions(new CardView(this));
                 registerForContextMenu(cardViews[countOfCardViews]);
                 countOfCardViews++;
@@ -126,16 +126,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         viewInspector.setContextOptions(item);
-        contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons, cardViews, ID, editText, editText1,button, button1);
+        linearLayout1.setVisibility(View.VISIBLE);
+
         if(item.getItemId() == 5) {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
             startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+            linearLayout1.setVisibility(View.GONE);
         }
         else if(item.getItemId() == 6)
         {
             Intent photoPickerIntent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(photoPickerIntent1, CAMERA_REQUEST);
+            linearLayout1.setVisibility(View.GONE);
         }
         else if(item.getItemId() == 10)
         {
@@ -143,9 +146,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
             startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
-            xSize = 360;
-            ySize = 360;
+            linearLayout1.setVisibility(View.GONE);
         }
+        contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons, cardViews, ID, editText, editText1,button, button1);
         return super.onContextItemSelected(item);
     }
 
@@ -157,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selectImagePublic = selectedImage;
                     Picasso.with(this)
                             .load(selectedImage)
-                            .resize(360, 400)
+                            .resize(460, 400)
                             .into(imageViews[ID]);
                 }
     }
@@ -166,20 +169,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button:
-            if (textViews[ID] != null && tag.equals(textViews[ID].getTag()))
+            if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) {
                 textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
-            else if (buttons[ID] != null && tag.equals(buttons[ID].getTag()))
+
+            }
+            else if (buttons[ID] != null && tag.equals(buttons[ID].getTag())) {
+
                 buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText);
-            else if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag()))
+
+            }
+            else if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag())) {
                 imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], selectImagePublic, editText, editText1);
+
+            }
                 break;
             case R.id.button_close:
                 editText1.setVisibility(View.GONE);
                 button1.setVisibility(View.GONE);
                 button.setVisibility(View.GONE);
                 editText.setVisibility(View.GONE);
+                linearLayout1.setVisibility(View.GONE);
                 break;
         }
+        linearLayout1.setVisibility(View.GONE);
     }
 }
 

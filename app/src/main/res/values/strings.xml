@@ -2,4 +2,10 @@
     <string name="app_name">Draft</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="facebook_app_id">1174188409333861</string>
+
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DRAFT</string>
+    <string name="start_text">Это ваш холст, здесь вы можете добавлять кнопки, строки, картинки, макетный область и так далее. Дайте волю вашему воображению и сделайте дизайн-документ вашего проекта!</string>
+    <string name="hint_text">Чтобо создать новый элемент, нажмите 3 точки в правом верхнем углу и выберете элемент, который хотите создать!</string>
 </resources>

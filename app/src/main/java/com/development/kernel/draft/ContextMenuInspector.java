@@ -13,7 +13,9 @@ import android.widget.TextView;
 class ContextMenuInspector {
 
     ContextMenu setContentMenuOptions(ContextMenu menu, View v, Button[] buttons, TextView[] textViews, ImageView[] imageViews, CardView[] cardViews) {
+
             if (buttons[v.getId()] != null && v.getTag().equals(buttons[v.getId()].getTag()) ) {
+                    menu.setHeaderTitle("Кнопка");
                     menu.add(0, 1, 0, "Изменить ширину");
                     menu.add(0, 2, 0, "Изменить высоту");
                     menu.add(0, 3, 0, "Изменить текст");
@@ -21,12 +23,14 @@ class ContextMenuInspector {
             }
             if(textViews[v.getId()] != null && v.getTag().equals(textViews[v.getId()].getTag()))
             {
+                    menu.setHeaderTitle("Строка");
                     menu.add(0, 1, 0, "Изменить текст");
                     menu.add(0, 2, 0,"Изменить размер текста");
                     menu.add(0, 4, 0, "Удалить объект");
             }
             if(imageViews[v.getId()] != null && v.getTag().equals(imageViews[v.getId()].getTag()))
             {
+                    menu.setHeaderTitle("Изображение");
                     menu.add(0, 5, 0, "Импорт из галереи");
                     menu.add(0, 6, 0, "Сделать снимок");
                     menu.add(0, 7, 0, "Изменить размеры");
@@ -34,6 +38,7 @@ class ContextMenuInspector {
             }
             if(cardViews[v.getId()] != null && v.getTag().equals(cardViews[v.getId()].getTag()))
             {
+                    menu.setHeaderTitle("Макетный холст");
                     menu.add(0,10,0, "Добавить картинку");
                     menu.add(0,4,0,"Удалить объект");
             }
