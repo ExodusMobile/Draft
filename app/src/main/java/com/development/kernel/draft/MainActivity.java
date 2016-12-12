@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ContextMenuInspector contextMenuInspector;
     private LinearLayout hintLayout;
     private LinearLayout linearLayout1;
+    private ImageView[] imageViews1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.android_main_context);
         linearLayout1 = (LinearLayout) findViewById(R.id.linear_layout);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,200,0,0);
+        layoutParams.setMargins(0,70,0,0);
         buttons = new Button[99];
         textViews = new TextView[99];
         imageViews = new ImageView[99];
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button1 = (Button) findViewById(R.id.button_close);
         button.setOnClickListener(this);
         button1.setOnClickListener(this);
-
+        imageViews1 = new ImageView[300];
         hintLayout = (LinearLayout) findViewById(R.id.hint_layout);
 
 
@@ -127,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onContextItemSelected(MenuItem item) {
         viewInspector.setContextOptions(item);
         linearLayout1.setVisibility(View.VISIBLE);
-
+        Toast.makeText(this,"Схватываете на лету! Теперь вы можете создавать другие элементы и редактировать их! Удачи =)", Toast.LENGTH_LONG).show();
         if(item.getItemId() == 5) {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
@@ -142,10 +144,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(item.getItemId() == 10)
         {
-            viewInspector.setPropertiesForView(cardViews[ID], imageViews, ID);
+            viewInspector.setPropertiesForView(cardViews[ID], imageViews1, ID);
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
-            startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+            startActivityForResult(photoPickerIntent, 3);
             linearLayout1.setVisibility(View.GONE);
         }
         contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons, cardViews, ID, editText, editText1,button, button1);
@@ -155,14 +157,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-                if(resultCode == RESULT_OK) {
+
+            switch (requestCode) {
+                case 1:
+                if (resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
                     selectImagePublic = selectedImage;
                     Picasso.with(this)
                             .load(selectedImage)
                             .resize(460, 400)
                             .into(imageViews[ID]);
+
                 }
+                    break;
+                case 3:
+                    if (resultCode == RESULT_OK) {
+                        Uri selectedImage = imageReturnedIntent.getData();
+                        selectImagePublic = selectedImage;
+                        Picasso.with(this)
+                                .load(selectedImage)
+                                .resize(460, 400)
+                                .into(imageViews1[ID]);
+
+                    }
+                    break;
+            }
     }
 
     @Override
