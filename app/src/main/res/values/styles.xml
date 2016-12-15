@@ -27,5 +27,9 @@
     <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
     </style>
+    <style name="menu_label_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">#fafafa</item>
+    </style>
 
 </resources>

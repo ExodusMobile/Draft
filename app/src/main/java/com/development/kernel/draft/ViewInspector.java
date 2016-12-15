@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.HorizontalScrollView;
@@ -51,6 +52,11 @@ class ViewInspector {
         button.setText("New button");
         button.setLayoutParams(viewParams);
         button.setId(buttonsId); //теги и id для массива кнопок
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            button.setStateListAnimator(null);
+            button.setElevation(10);
+            button.setTranslationZ(10);;
+        }
         String buttonTags = "Button:";
         button.setTag(buttonTags + String.valueOf(CountButtonsTags++));
         linearLayout.addView(button);
@@ -75,6 +81,11 @@ class ViewInspector {
         linearLayout.addView(imageView);
         imageView.setMinimumWidth(300);
         imageView.setMinimumHeight(300);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            imageView.setStateListAnimator(null);
+            imageView.setElevation(10);
+            imageView.setTranslationZ(10);
+        }
         Picasso.with(mainActivity).load(R.drawable.rectangle).resize(500,500).into(imageView);
         String imageViewsTags = "ImageView:";
         imageView.setId(imageViewsId);

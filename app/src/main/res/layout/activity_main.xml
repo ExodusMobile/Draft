@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,17 +34,55 @@
            
 
         </android.support.design.widget.CollapsingToolbarLayout>
+
     </android.support.design.widget.AppBarLayout>
+
 
     <include layout="@layout/content_scrolling" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_gravity="bottom">
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/floatingbutton"
+            app:fab_addButtonColorNormal="#f0c828"
+            app:fab_addButtonColorPressed="#d0ad1e"
+            android:layout_alignParentRight="true"
+            app:fab_labelStyle="@style/menu_label_style">
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/action1"
+                fab:fab_title="Создать кнопку"
+                fab:fab_colorNormal="#f0c828"
+                app:fab_colorPressed="#d0ad1e"/>
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/action2"
+                fab:fab_title="Создать строку"
+                fab:fab_colorNormal="#f0c828"
+                app:fab_colorPressed="#d0ad1e"/>
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/action3"
+                fab:fab_title="Создать изображение"
+                fab:fab_colorNormal="#f0c828"
+                app:fab_colorPressed="#d0ad1e"/>
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/action4"
+                app:fab_title="Создать холст"
+                fab:fab_colorNormal="#f0c828"
+                app:fab_colorPressed="#d0ad1e"/>
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    </RelativeLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>
