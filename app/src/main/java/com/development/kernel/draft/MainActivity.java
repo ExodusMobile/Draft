@@ -1,6 +1,8 @@
 package com.development.kernel.draft;
 
+
 import android.content.Intent;
+
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +10,6 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout.LayoutParams;
@@ -52,14 +52,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView[] imageViews1;
     private LinearLayout linearLayout;
 
+    private FloatingActionsMenu floatingActionsMenu;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         linearLayout = (LinearLayout) findViewById(R.id.android_main_context);
         linearLayout1 = (LinearLayout) findViewById(R.id.linear_layout);
-        LayoutParams layoutParams= new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,70,0,70);
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, 70, 0, 70);
         buttons = new Button[99];
         textViews = new TextView[99];
         imageViews = new ImageView[99];
@@ -74,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageViews1 = new ImageView[300];
         hintLayout = (LinearLayout) findViewById(R.id.hint_layout);
 
+        floatingActionsMenu = (FloatingActionsMenu) findViewById(R.id.floatingbutton);
 
         FloatingActionButton action1 = (FloatingActionButton) findViewById(R.id.action1);
         FloatingActionButton action2 = (FloatingActionButton) findViewById(R.id.action2);
@@ -88,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         viewInspector = new ViewInspector(layoutParams, linearLayout, linearLayouts, this); //создаем экземпляр нашего класса
     }
+
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -132,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
             switch (requestCode) {
-                case 1:
+                case GALLERY_REQUEST:
                 if (resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
                     selectImagePublic = selectedImage;
@@ -142,6 +149,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             .into(imageViews[ID]);
 
                 }
+                    break;
+                case CAMERA_REQUEST:
+                    if (resultCode == RESULT_OK) {
+                        Uri selectedImage = imageReturnedIntent.getData();
+                        selectImagePublic = selectedImage;
+                        Picasso.with(this)
+                                .load(selectedImage)
+                                .resize(460, 400)
+                                .into(imageViews[ID]);
+
+                    }
                     break;
                 case 3:
                     if (resultCode == RESULT_OK) {
@@ -155,10 +173,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     break;
             }
+
     }
 
     @Override
     public void onClick(View view) {
+        floatingActionsMenu.collapse();
+        viewInspector.startNotification();
         switch (view.getId()) {
             case R.id.button:
             if (textViews[ID] != null && tag.equals(textViews[ID].getTag()))

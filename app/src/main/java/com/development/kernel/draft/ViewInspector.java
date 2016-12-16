@@ -1,5 +1,12 @@
 package com.development.kernel.draft;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.widget.CardView;
@@ -17,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 class ViewInspector {
 
@@ -123,6 +132,38 @@ class ViewInspector {
     void setContextOptions(MenuItem item)//запись выбранного элемента в контекстном меню в переменную
     {
         WIS = item.getItemId();
+    }
+    private static final int NOTIFY_ID = 101;
+    public void startNotification(){
+        Context context = mainActivity.getApplicationContext();
+
+        Intent notificationIntent = new Intent(context, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(context,
+                0, notificationIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+
+        Resources res = context.getResources();
+        Notification.Builder builder = new Notification.Builder(context);
+
+        builder.setContentIntent(contentIntent)
+                .setSmallIcon(R.drawable.com_facebook_button_icon)
+                // большая картинка
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
+                //.setTicker(res.getString(R.string.warning)) // текст в строке состояния
+                .setTicker("Последнее китайское предупреждение!")
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true)
+                //.setContentTitle(res.getString(R.string.notifytitle)) // Заголовок уведомления
+                .setContentTitle("Напоминание")
+                //.setContentText(res.getString(R.string.notifytext))
+                .setContentText("Пора покормить кота"); // Текст уведомления
+
+        // Notification notification = builder.getNotification(); // до API 16
+        Notification notification = builder.build();
+
+        NotificationManager notificationManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFY_ID, notification);
     }
 
     Button setPropertiesForView(Button button, EditText editText) //настройки для кнопки
