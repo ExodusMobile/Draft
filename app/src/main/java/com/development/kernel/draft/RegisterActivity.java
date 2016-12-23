@@ -2,6 +2,7 @@ package com.development.kernel.draft;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,6 +21,9 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    final String SAVED_VALUE = "saved_value";
+
     // Progress Dialog Object
     ProgressDialog prgDialog;
     // Error Msg TextView Object
@@ -30,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText emailET;
     // Password Edit View Object
     EditText pwdET;
+
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,15 @@ public class RegisterActivity extends AppCompatActivity {
         prgDialog.setMessage("Please wait...");
         // Set Cancelable as False
         prgDialog.setCancelable(false);
+
+        sharedPreferences = getPreferences(MODE_PRIVATE);
+        Boolean savedValue = sharedPreferences.getBoolean(SAVED_VALUE,false);
+        if(savedValue)
+        {
+            navigatetoLoginActivity();
+            this.finish();
+        }
+
     }
     public void registerUser(View view){
         Log.d("HI","gigi");
@@ -97,8 +112,13 @@ public class RegisterActivity extends AppCompatActivity {
                     if (obj.getBoolean("status")) {
                         // Set Default Values for Edit View controls
                         setDefaultValues();
+                        navigatetoLoginActivity();
                         // Display successfully registered message using Toast
                         Toast.makeText(getApplicationContext(), "You are successfully registered!", Toast.LENGTH_LONG).show();
+                        sharedPreferences = getPreferences(MODE_PRIVATE);
+                        SharedPreferences.Editor ed = sharedPreferences.edit();
+                        ed.putBoolean(SAVED_VALUE, true);
+                        ed.apply();
                     } else {
                         errorMsg.setText(obj.getString("error_msg"));
                         Toast.makeText(getApplicationContext(), obj.getString("error_msg"), Toast.LENGTH_LONG).show();
@@ -132,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void navigatetoLoginActivity(View view){
+    public void navigatetoLoginActivity(){
         Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
         // Clears History of Activity
         loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
