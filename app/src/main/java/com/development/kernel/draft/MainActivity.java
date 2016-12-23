@@ -2,23 +2,20 @@ package com.development.kernel.draft;
 
 
 import android.content.Intent;
-
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -50,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout hintLayout;
     private LinearLayout linearLayout1;
     private ImageView[] imageViews1;
-    private LinearLayout linearLayout;
 
     private FloatingActionsMenu floatingActionsMenu;
 
@@ -60,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        linearLayout = (LinearLayout) findViewById(R.id.android_main_context);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.android_main_context);
         linearLayout1 = (LinearLayout) findViewById(R.id.linear_layout);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0, 70, 0, 70);
@@ -179,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         floatingActionsMenu.collapse();
-        viewInspector.startNotification();
         switch (view.getId()) {
             case R.id.button:
             if (textViews[ID] != null && tag.equals(textViews[ID].getTag()))
@@ -191,8 +186,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag()))
                 imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], selectImagePublic, editText, editText1);
                 break;
-
-
             case R.id.button_close:
                 editText1.setVisibility(View.GONE);
                 button1.setVisibility(View.GONE);
