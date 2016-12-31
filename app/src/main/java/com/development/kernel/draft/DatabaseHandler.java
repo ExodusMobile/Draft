@@ -9,9 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Acer on 11.12.2016.
- */
 
 class DatabaseHandler extends SQLiteOpenHelper implements IDatabaseHandler {
     private static final int DATABASE_VERSION = 1;

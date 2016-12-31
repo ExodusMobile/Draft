@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,9 +21,11 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
     final String SAVED_VALUE = "saved_value";
+    final String SAVED_EMAIL = "saved_email";
+    final String SAVED_PASS = "saved_pass";
 
     // Progress Dialog Object
     ProgressDialog prgDialog;
@@ -34,6 +37,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText emailET;
     // Password Edit View Object
     EditText pwdET;
+
+    Button button;
 
     SharedPreferences sharedPreferences;
     @Override
@@ -54,14 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
         prgDialog.setMessage("Please wait...");
         // Set Cancelable as False
         prgDialog.setCancelable(false);
-
-        sharedPreferences = getPreferences(MODE_PRIVATE);
-        Boolean savedValue = sharedPreferences.getBoolean(SAVED_VALUE,false);
-        if(savedValue)
-        {
-            navigatetoLoginActivity();
-            this.finish();
-        }
+        button = (Button) findViewById(R.id.btnLinkToLoginScreen);
+        button.setOnClickListener(this);
 
     }
     public void registerUser(View view){
@@ -72,6 +71,8 @@ public class RegisterActivity extends AppCompatActivity {
         String email = emailET.getText().toString();
         // Get Password ET control value
         String password = pwdET.getText().toString();
+
+
         // Instantiate Http Request Param Object
         RequestParams params = new RequestParams();
         // When Name Edit View, Email Edit View and Password Edit View have values other than Null
@@ -112,13 +113,11 @@ public class RegisterActivity extends AppCompatActivity {
                     if (obj.getBoolean("status")) {
                         // Set Default Values for Edit View controls
                         setDefaultValues();
-                        navigatetoLoginActivity();
+
+                        navigateToLoginActivity();
                         // Display successfully registered message using Toast
                         Toast.makeText(getApplicationContext(), "You are successfully registered!", Toast.LENGTH_LONG).show();
-                        sharedPreferences = getPreferences(MODE_PRIVATE);
-                        SharedPreferences.Editor ed = sharedPreferences.edit();
-                        ed.putBoolean(SAVED_VALUE, true);
-                        ed.apply();
+
                     } else {
                         errorMsg.setText(obj.getString("error_msg"));
                         Toast.makeText(getApplicationContext(), obj.getString("error_msg"), Toast.LENGTH_LONG).show();
@@ -152,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void navigatetoLoginActivity(){
+    public void navigateToLoginActivity(){
         Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
         // Clears History of Activity
         loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -163,5 +162,10 @@ public class RegisterActivity extends AppCompatActivity {
         nameET.setText("");
         emailET.setText("");
         pwdET.setText("");
+    }
+
+    @Override
+    public void onClick(View view) {
+        navigateToLoginActivity();
     }
 }

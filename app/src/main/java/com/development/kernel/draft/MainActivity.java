@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     static final int GALLERY_REQUEST = 1;
     static final int CAMERA_REQUEST = 2;
-
+    ContextMenu menu;
     private Uri selectImagePublic = null;
 
     private ViewInspector viewInspector;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.android_main_context);
         linearLayout1 = (LinearLayout) findViewById(R.id.linear_layout);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0, 70, 0, 70);
+        layoutParams.setMargins(0, 30, 0, 30);
         buttons = new Button[99];
         textViews = new TextView[99];
         imageViews = new ImageView[99];
@@ -100,13 +100,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText.setVisibility(View.GONE);
         contextMenuInspector = new ContextMenuInspector();
         contextMenuInspector.setContentMenuOptions(menu, v, buttons, textViews, imageViews,cardViews);
+        linearLayout1.setVisibility(View.GONE);
         ID = v.getId();
         tag = v.getTag();
+        this.menu = menu;
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         viewInspector.setContextOptions(item);
+        floatingActionsMenu.collapse();
         linearLayout1.setVisibility(View.VISIBLE);
         if(item.getItemId() == 5) {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -126,6 +129,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivityForResult(photoPickerIntent, 3);
             linearLayout1.setVisibility(View.GONE);
         }
+        else if (item.getItemId() == 11)
+        {
+            viewInspector.setPropertiesForView(cardViews[ID],imageViews1,ID);
+        }
+        else if (item.getItemId() == 12)
+        {
+            viewInspector.setPropertiesForView(textViews[ID],editText,button);
+            linearLayout1.setVisibility(View.GONE);
+        }
         contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons, cardViews, ID, editText, editText1,button, button1);
         return super.onContextItemSelected(item);
     }
@@ -141,9 +153,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selectImagePublic = selectedImage;
                     Picasso.with(this)
                             .load(selectedImage)
-                            .resize(460, 400)
+                            .resize(1080, 750)
                             .into(imageViews[ID]);
-
                 }
                     break;
                 case CAMERA_REQUEST:
@@ -154,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 .load(selectedImage)
                                 .resize(460, 400)
                                 .into(imageViews[ID]);
-
                     }
                     break;
                 case 3:
@@ -165,11 +175,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 .load(selectedImage)
                                 .resize(460, 400)
                                 .into(imageViews1[ID]);
-
                     }
                     break;
             }
-
     }
 
     @Override
@@ -193,9 +201,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 editText.setVisibility(View.GONE);
                 linearLayout1.setVisibility(View.GONE);
                 break;
-
-
-
             case R.id.action1:
                 buttons[countOfButtons] = viewInspector.setDefaultViewOptions(new Button(this)); //создаем кнопку и назначаем ей начальные найтроки в viewInspector
                 registerForContextMenu(buttons[countOfButtons]);
@@ -219,7 +224,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 registerForContextMenu(cardViews[countOfCardViews]);
                 countOfCardViews++;
                 hintLayout.setVisibility(View.GONE);
-
                 break;
 
         }

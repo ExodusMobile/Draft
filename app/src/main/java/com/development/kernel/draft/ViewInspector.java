@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.widget.CardView;
@@ -14,6 +15,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Button;
@@ -60,11 +62,14 @@ class ViewInspector {
     Button setDefaultViewOptions(Button button) {  //назначает начальные настройки кнопке и тексту перегружен (2)
         button.setText("New button");
         button.setLayoutParams(viewParams);
-        button.setId(buttonsId); //теги и id для массива кнопок
+        button.setId(buttonsId);//теги и id для массива кнопок
+        button.setBackgroundColor(Color.parseColor("#ff6347"));
+        button.setTextColor(Color.parseColor("#ffffff"));
+        button.setMinimumWidth(400);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             button.setStateListAnimator(null);
             button.setElevation(10);
-            button.setTranslationZ(10);;
+            button.setTranslationZ(10);
         }
         String buttonTags = "Button:";
         button.setTag(buttonTags + String.valueOf(CountButtonsTags++));
@@ -214,6 +219,12 @@ class ViewInspector {
                     Toast.makeText(mainActivity, "Неверный формат ввода", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case 12:
+                Log.d("lolas1","test");
+                textView.setMinimumWidth(1080);
+                textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                textView.setText(textView.getText().toString());
+                break;
             case 4:
                 CountTextViewTags--;//понижение тега
                 break;
@@ -247,8 +258,14 @@ class ViewInspector {
         switch (WIS)
         {
             case 10:
-                linearLayouts[ID].addView(imageViews[ID] = new ImageView(mainActivity));
-                Picasso.with(mainActivity).load(R.drawable.rectangle).resize(360,360).into(imageViews[ID]);
+
+                    linearLayouts[ID].setOrientation(LinearLayout.HORIZONTAL);
+                    linearLayouts[ID].addView(imageViews[ID] = new ImageView(mainActivity));
+                    Picasso.with(mainActivity).load(R.drawable.rectangle).resize(360, 360).into(imageViews[ID]);
+                break;
+            case 11:
+                    linearLayouts[ID].setOrientation(LinearLayout.VERTICAL);
+                    linearLayouts[ID].addView(new CheckBox(mainActivity));
                 break;
             case 4:
                 CountImageViewTags--;//понижение тега

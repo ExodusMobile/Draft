@@ -2,6 +2,7 @@ package com.development.kernel.draft;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,8 +31,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailET;
     // Passwprd Edit View Object
     EditText pwdET;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,11 +152,7 @@ public class LoginActivity extends AppCompatActivity {
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(homeIntent);
     }
+    SharedPreferences sharedPreferences;
 
 
-    public void navigatetoRegisterActivity(View view){
-        Intent loginIntent = new Intent(getApplicationContext(),RegisterActivity.class);
-        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(loginIntent);
-    }
 }
