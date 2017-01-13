@@ -9,50 +9,70 @@
         android:orientation="vertical"
         android:padding="5dip" >
 
+        <ImageView
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/draft_sticker_2"/>
+
         <!-- View Title Label -->
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip"
+            android:layout_marginTop="15dp"
             android:text="@string/register_title"
             android:textSize="25sp"
+            android:textAlignment="center"
             android:textStyle="bold" />
         <!-- Name Label -->
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/name" />
-        <!-- Name TextField -->
 
         <EditText
             android:id="@+id/registerName"
             android:layout_width="fill_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@drawable/edit_text_style"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_height="wrap_content" android:hint="Введите имя"/>
 
         <!-- Email Label -->
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/email" />
+
 
         <EditText
             android:id="@+id/registerEmail"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-4dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/edit_text_style"
             android:hint="Введите email"
             android:inputType="textEmailAddress" />
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dip"
-            android:text="@string/pwd" />
+
         <EditText
             android:id="@+id/registerPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-4dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/edit_text_style"
             android:hint="Введите пароль"
             android:inputType="textPassword" />
 
@@ -72,8 +92,7 @@
             android:id="@+id/btnRegister"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:background="#ff6347"
+            android:background="#7db343"
             android:onClick="registerUser"
             android:text="@string/btnRegister"
             android:textColor="#fff" />
@@ -84,11 +103,19 @@
             android:id="@+id/btnLinkToLoginScreen"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+
             android:background="@null"
             android:text="Вход"
             android:textColor="#228b22"
             android:textStyle="bold" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#45bdcb"
+            android:textColor="#FFFFFF"
+            android:text="Вход через FACEBOOK"
+            android:layout_marginTop="20dp"/>
     </LinearLayout>
 
 </ScrollView>

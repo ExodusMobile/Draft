@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     static final int GALLERY_REQUEST = 1;
     static final int CAMERA_REQUEST = 2;
+    static final int CARD_IMAGE_REQUEST = 3;
+    static final int HEADER_REQUEST = 4;
     ContextMenu menu;
     private Uri selectImagePublic = null;
 
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout hintLayout;
     private LinearLayout linearLayout1;
     private ImageView[] imageViews1;
+    private ImageView headerImage;
 
     private FloatingActionsMenu floatingActionsMenu;
 
@@ -73,7 +76,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button1.setOnClickListener(this);
         imageViews1 = new ImageView[300];
         hintLayout = (LinearLayout) findViewById(R.id.hint_layout);
-
+        headerImage = (ImageView) findViewById(R.id.main_backdrop);
+        registerForContextMenu(headerImage);
+        headerImage.setTag("Header");
         floatingActionsMenu = (FloatingActionsMenu) findViewById(R.id.floatingbutton);
 
         FloatingActionButton action1 = (FloatingActionButton) findViewById(R.id.action1);
@@ -94,16 +99,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        editText1.setVisibility(View.GONE);
-        button1.setVisibility(View.GONE);
-        button.setVisibility(View.GONE);
-        editText.setVisibility(View.GONE);
-        contextMenuInspector = new ContextMenuInspector();
-        contextMenuInspector.setContentMenuOptions(menu, v, buttons, textViews, imageViews,cardViews);
-        linearLayout1.setVisibility(View.GONE);
-        ID = v.getId();
-        tag = v.getTag();
-        this.menu = menu;
+        if(v.getTag().equals("Header"))
+        {
+            menu.add(0,0,0,"Изменить шапку");
+        }
+        else {
+            editText1.setVisibility(View.GONE);
+            button1.setVisibility(View.GONE);
+            button.setVisibility(View.GONE);
+            editText.setVisibility(View.GONE);
+            contextMenuInspector = new ContextMenuInspector();
+            contextMenuInspector.setContentMenuOptions(menu, v, buttons, textViews, imageViews, cardViews);
+            linearLayout1.setVisibility(View.GONE);
+            ID = v.getId();
+            tag = v.getTag();
+            this.menu = menu;
+        }
     }
 
     @Override
@@ -111,41 +122,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewInspector.setContextOptions(item);
         floatingActionsMenu.collapse();
         linearLayout1.setVisibility(View.VISIBLE);
-        if(item.getItemId() == 5) {
+        if(item.getItemId() == 0) {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
-            startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
-            linearLayout1.setVisibility(View.GONE);
+            startActivityForResult(photoPickerIntent, HEADER_REQUEST);
         }
-        else if(item.getItemId() == 6) {
-            Intent photoPickerIntent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(photoPickerIntent1, CAMERA_REQUEST);
-            linearLayout1.setVisibility(View.GONE);
+        else {
+
+            contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons,
+                    cardViews, ID, editText, editText1, button, button1, linearLayout1, imageViews1, viewInspector);
         }
-        else if(item.getItemId() == 10) {
-            viewInspector.setPropertiesForView(cardViews[ID], imageViews1, ID);
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            startActivityForResult(photoPickerIntent, 3);
-            linearLayout1.setVisibility(View.GONE);
-        }
-        else if (item.getItemId() == 11)
-        {
-            viewInspector.setPropertiesForView(cardViews[ID],imageViews1,ID);
-        }
-        else if (item.getItemId() == 12)
-        {
-            viewInspector.setPropertiesForView(textViews[ID],editText,button);
-            linearLayout1.setVisibility(View.GONE);
-        }
-        contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons, cardViews, ID, editText, editText1,button, button1);
         return super.onContextItemSelected(item);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-
             switch (requestCode) {
                 case GALLERY_REQUEST:
                 if (resultCode == RESULT_OK) {
@@ -163,11 +155,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         selectImagePublic = selectedImage;
                         Picasso.with(this)
                                 .load(selectedImage)
-                                .resize(460, 400)
+                                .resize(1080, 700)
                                 .into(imageViews[ID]);
                     }
                     break;
-                case 3:
+                case CARD_IMAGE_REQUEST:
                     if (resultCode == RESULT_OK) {
                         Uri selectedImage = imageReturnedIntent.getData();
                         selectImagePublic = selectedImage;
@@ -175,6 +167,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 .load(selectedImage)
                                 .resize(460, 400)
                                 .into(imageViews1[ID]);
+                    }
+                    break;
+                case HEADER_REQUEST:
+                    if (resultCode == RESULT_OK) {
+                        Uri selectedImage = imageReturnedIntent.getData();
+                        selectImagePublic = selectedImage;
+                        Picasso.with(this)
+                                .load(selectedImage)
+                                .resize(1080, 700)
+                                .into(headerImage);
                     }
                     break;
             }

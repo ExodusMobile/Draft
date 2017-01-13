@@ -6,10 +6,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.util.Log;
@@ -219,7 +222,7 @@ class ViewInspector {
                     Toast.makeText(mainActivity, "Неверный формат ввода", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case 12:
+            case 3:
                 Log.d("lolas1","test");
                 textView.setMinimumWidth(1080);
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -238,8 +241,10 @@ class ViewInspector {
     {
         switch (WIS)
         {
-            case 7:
+
+            case 3:
                 try {
+
                     Picasso.with(mainActivity).load(selectImage).resize(Integer.valueOf(editText1.getText().toString()), Integer.valueOf(editText.getText().toString())).into(imageView);
                 }
                 catch (Exception e) {
@@ -252,22 +257,43 @@ class ViewInspector {
         }
         return imageView; //возвратить view элемент со всеми настройками
     }
-
-    CardView setPropertiesForView(CardView cardView, ImageView[] imageViews, int ID) //настройки для строки
+    ImageView setPropertiesForView(ImageView imageView) //настройки для строки
     {
         switch (WIS)
         {
-            case 10:
+
+            case 1:
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                mainActivity.startActivityForResult(photoPickerIntent, 1);
+                break;
+            case 2:
+                Intent photoPickerIntent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                mainActivity.startActivityForResult(photoPickerIntent1, 2);
+                break;
+        }
+        return imageView; //возвратить view элемент со всеми настройками
+    }
+
+    CardView setPropertiesForView(CardView cardView, ImageView[] imageViews, int ID, LinearLayout linearLayout) //настройки для строки
+    {
+        switch (WIS)
+        {
+            case 1:
 
                     linearLayouts[ID].setOrientation(LinearLayout.HORIZONTAL);
                     linearLayouts[ID].addView(imageViews[ID] = new ImageView(mainActivity));
                     Picasso.with(mainActivity).load(R.drawable.rectangle).resize(360, 360).into(imageViews[ID]);
+                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                    photoPickerIntent.setType("image/*");
+                    mainActivity.startActivityForResult(photoPickerIntent, 3);
+                    linearLayout.setVisibility(View.GONE);
                 break;
-            case 11:
+            case 2:
                     linearLayouts[ID].setOrientation(LinearLayout.VERTICAL);
                     linearLayouts[ID].addView(new CheckBox(mainActivity));
                 break;
-            case 4:
+            case 3:
                 CountImageViewTags--;//понижение тега
                 break;
         }
