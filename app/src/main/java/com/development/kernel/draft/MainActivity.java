@@ -140,13 +140,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onContextItemSelected(MenuItem item) {
         viewInspector.setContextOptions(item);
         floatingActionsMenu.collapse();
-        linearLayout1.setVisibility(View.VISIBLE);
+
         if(item.getItemId() == 0) {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
             startActivityForResult(photoPickerIntent, HEADER_REQUEST);
         }
         else {
+
+
             contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons,
                     cardViews, ID, editText, editText1, button, button1, linearLayout1, imageViews1, viewInspector, bottomNavigationBar); //управляем действиями
         }
@@ -213,10 +215,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag())) imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], selectImagePublic, editText, editText1);
                 break;
             case R.id.button_close:
-                editText1.setVisibility(View.GONE);
-                button1.setVisibility(View.GONE);
-                button.setVisibility(View.GONE);
-                editText.setVisibility(View.GONE);
+
                 linearLayout1.setVisibility(View.GONE);
                 bottomNavigationBar.show();
                 break;

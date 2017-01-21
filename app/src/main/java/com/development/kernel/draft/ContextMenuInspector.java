@@ -51,11 +51,12 @@ class ContextMenuInspector {
 
     void setContextMenuItemsOptions(MenuItem item, Object tag, TextView[] textViews, ImageView[] imageViews,
                                     Button[] buttons, CardView[] cardViews, int ID, EditText editText,
-                                    EditText editText1, Button button, Button button1, LinearLayout linearLayout, ImageView[] imageViews1, ViewInspector viewInspector, BottomNavigationBar bar) {
+                                    EditText editText1, Button button, Button button1, LinearLayout editField, ImageView[] imageViews1, ViewInspector viewInspector, BottomNavigationBar bar) {
         if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) {
             switch (item.getItemId())
             {
                 case 1:
+                    editField.setVisibility(View.VISIBLE);
                     editText.setInputType(InputType.TYPE_CLASS_TEXT);
                     editText.setVisibility(View.VISIBLE);
                     button.setVisibility(View.VISIBLE);
@@ -65,6 +66,7 @@ class ContextMenuInspector {
                     break;
 
                 case 2:
+                    editField.setVisibility(View.VISIBLE);
                     editText.setVisibility(View.VISIBLE);
                     button.setVisibility(View.VISIBLE);
                     editText.setInputType(InputType.TYPE_CLASS_PHONE);
@@ -73,7 +75,6 @@ class ContextMenuInspector {
                     bar.hide();
                     break;
                 case 3:
-
                     textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
                     break;
                 case 4:
@@ -85,14 +86,17 @@ class ContextMenuInspector {
 
             switch (item.getItemId()) {
                 case 1:
+                    editField.setVisibility(View.VISIBLE);
                     editText.setVisibility(View.VISIBLE);
                     button.setVisibility(View.VISIBLE);
                     button1.setVisibility(View.VISIBLE);
+
                     bar.hide();
                     editText.setInputType(InputType.TYPE_CLASS_PHONE);
                     editText.setText("");
                     break;
                 case 2:
+                    editField.setVisibility(View.VISIBLE);
                     editText.setVisibility(View.VISIBLE);
                     button.setVisibility(View.VISIBLE);
                     button1.setVisibility(View.VISIBLE);
@@ -101,6 +105,7 @@ class ContextMenuInspector {
                     editText.setText("");
                     break;
                 case 3:
+                    editField.setVisibility(View.VISIBLE);
                     editText.setInputType(InputType.TYPE_CLASS_TEXT);
                     editText.setVisibility(View.VISIBLE);
                     button.setVisibility(View.VISIBLE);
@@ -124,6 +129,7 @@ class ContextMenuInspector {
                     break;
                 case 3:
                     bar.hide();
+                    editField.setVisibility(View.VISIBLE);
                     button1.setVisibility(View.VISIBLE);
                     editText.setHint("Высота (Минимальные размеры: 300px)");
                     editText1.setHint("Ширина (Минимальные размеры: 300px)");
@@ -146,10 +152,10 @@ class ContextMenuInspector {
         if (cardViews[ID] != null && tag.equals(cardViews[ID].getTag())) {
             switch (item.getItemId()){
                 case 1:
-                    viewInspector.setPropertiesForView(cardViews[ID],imageViews1,ID, linearLayout);
+                    viewInspector.setPropertiesForView(cardViews[ID],imageViews1,ID, editField);
                     break;
                 case 2:
-                    viewInspector.setPropertiesForView(cardViews[ID],imageViews1,ID, linearLayout);
+                    viewInspector.setPropertiesForView(cardViews[ID],imageViews1,ID, editField);
                     break;
                 case 3:
                     cardViews[ID].setVisibility(View.GONE);

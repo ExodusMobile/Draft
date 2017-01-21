@@ -224,7 +224,6 @@ class ViewInspector {
                 }
                 break;
             case 3:
-                Log.d("lolas1","test");
                 textView.setMinimumWidth(1080);
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 textView.setText(textView.getText().toString());
