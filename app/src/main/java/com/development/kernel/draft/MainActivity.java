@@ -4,7 +4,9 @@ package com.development.kernel.draft;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.ContextMenu;
@@ -17,17 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.squareup.picasso.Picasso;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     static final int GALLERY_REQUEST = 1;
     static final int CAMERA_REQUEST = 2;
     static final int CARD_IMAGE_REQUEST = 3;
     static final int HEADER_REQUEST = 4;
-    ContextMenu menu;
     private Uri selectImagePublic = null;
 
     private ViewInspector viewInspector;
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView headerImage;
 
     private FloatingActionsMenu floatingActionsMenu;
+    private BottomNavigationBar bottomNavigationBar;
 
 
 
@@ -59,6 +63,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+
+        bottomNavigationBar
+                .addItem(new BottomNavigationItem(R.drawable.ic_recent_actors_white_36dp,"Companies"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_settings_white_36dp,"Settings"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_reorder_white_36dp,"Edit"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_info_white_36dp,"Help"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_account_circle_white_36dp,"Profile"))
+                .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
+                .setMode(BottomNavigationBar.MODE_DEFAULT)
+                .initialise();
+
+
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.android_main_context);
         linearLayout1 = (LinearLayout) findViewById(R.id.linear_layout);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -81,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         headerImage.setTag("Header");
         floatingActionsMenu = (FloatingActionsMenu) findViewById(R.id.floatingbutton);
 
+
+
         FloatingActionButton action1 = (FloatingActionButton) findViewById(R.id.action1);
         FloatingActionButton action2 = (FloatingActionButton) findViewById(R.id.action2);
         FloatingActionButton action3 = (FloatingActionButton) findViewById(R.id.action3);
@@ -92,13 +111,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         action4.setOnClickListener(this);
 
 
-        viewInspector = new ViewInspector(layoutParams, linearLayout, linearLayouts, this); //создаем экземпляр нашего класса
+        viewInspector = new ViewInspector(layoutParams, linearLayout, linearLayouts, this, bottomNavigationBar); //создаем экземпляр нашего класса
     }
 
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
+        bottomNavigationBar.show();
         if(v.getTag().equals("Header"))
         {
             menu.add(0,0,0,"Изменить шапку");
@@ -113,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             linearLayout1.setVisibility(View.GONE);
             ID = v.getId();
             tag = v.getTag();
-            this.menu = menu;
         }
     }
 
@@ -128,9 +147,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivityForResult(photoPickerIntent, HEADER_REQUEST);
         }
         else {
-
             contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons,
-                    cardViews, ID, editText, editText1, button, button1, linearLayout1, imageViews1, viewInspector);
+                    cardViews, ID, editText, editText1, button, button1, linearLayout1, imageViews1, viewInspector, bottomNavigationBar); //управляем действиями
         }
         return super.onContextItemSelected(item);
     }
@@ -187,14 +205,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         floatingActionsMenu.collapse();
         switch (view.getId()) {
             case R.id.button:
-            if (textViews[ID] != null && tag.equals(textViews[ID].getTag()))
-                textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
+                bottomNavigationBar.show();
+            if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
 
-            else if (buttons[ID] != null && tag.equals(buttons[ID].getTag()))
-                buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText);
+            else if (buttons[ID] != null && tag.equals(buttons[ID].getTag())) buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText);
 
-            else if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag()))
-                imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], selectImagePublic, editText, editText1);
+            else if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag())) imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], selectImagePublic, editText, editText1);
                 break;
             case R.id.button_close:
                 editText1.setVisibility(View.GONE);
@@ -202,6 +218,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 button.setVisibility(View.GONE);
                 editText.setVisibility(View.GONE);
                 linearLayout1.setVisibility(View.GONE);
+                bottomNavigationBar.show();
                 break;
             case R.id.action1:
                 buttons[countOfButtons] = viewInspector.setDefaultViewOptions(new Button(this)); //создаем кнопку и назначаем ей начальные найтроки в viewInspector
@@ -230,6 +247,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
         linearLayout1.setVisibility(View.GONE);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }
 

@@ -2,11 +2,12 @@ package com.development.kernel.draft;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,12 +71,11 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("password", password);
                 // Invoke RESTful Web Service with Http parameters
                 invokeWS(params);
-
         } else{
             Toast.makeText(getApplicationContext(), "Please fill the form, don't leave any field blank", Toast.LENGTH_LONG).show();
         }
-
     }
+
 
     public void invokeWS(RequestParams params){
 
@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get("http://195.19.44.155/samsung/api/?method=login",params, new JsonHttpResponseHandler() { //наверное подключается к серверу и выполняется метод логин
+        client.get("http://195.19.44.155/samsung/api/index.php?method=login",params, new JsonHttpResponseHandler() { //наверное подключается к серверу и выполняется метод логин
             @Override // параметры метода client.get() идут в аргументах
             public void onSuccess(int statusCode, Header[] headers, JSONObject obj) { // если операция прошла успешно
                 //super.onSuccess(statusCode,headers,res);
@@ -152,7 +152,4 @@ public class LoginActivity extends AppCompatActivity {
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(homeIntent);
     }
-    SharedPreferences sharedPreferences;
-
-
 }

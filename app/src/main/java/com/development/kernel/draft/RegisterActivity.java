@@ -2,7 +2,6 @@ package com.development.kernel.draft;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,9 +22,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
-    final String SAVED_VALUE = "saved_value";
-    final String SAVED_EMAIL = "saved_email";
-    final String SAVED_PASS = "saved_pass";
 
     // Progress Dialog Object
     ProgressDialog prgDialog;
@@ -40,7 +36,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     Button button;
 
-    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         }
         // When any of the Edit View control left blank
-        else{
+        else {
             Toast.makeText(getApplicationContext(), "Please fill the form, don't leave any field blank", Toast.LENGTH_LONG).show();
         }
 
@@ -103,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         prgDialog.show();
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://195.19.44.155/samsung/api/?method=register", params, new JsonHttpResponseHandler() {
+        client.get("http://195.19.44.155/samsung/api/index.php?method=register", params, new JsonHttpResponseHandler() {
             // When the response returned by REST has Http response code '200'
 
             public void onSuccess(int statusCode, Header[] headers, JSONObject obj) {

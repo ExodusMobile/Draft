@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context="com.development.kernel.draft.MainActivity">
 
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -41,17 +42,19 @@
     <include layout="@layout/content_scrolling" />
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
         <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/floatingbutton"
             app:fab_addButtonColorNormal="#7db343"
             app:fab_addButtonColorPressed="#5a842e"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
             app:fab_labelStyle="@style/menu_label_style">
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
@@ -82,7 +85,14 @@
                 fab:fab_colorNormal="#7db343"
                 app:fab_colorPressed="#5a842e"/>
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
-    </RelativeLayout>
+
+        <com.ashokvarma.bottomnavigation.BottomNavigationBar
+            android:layout_gravity="bottom"
+            android:id="@+id/bottom_navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

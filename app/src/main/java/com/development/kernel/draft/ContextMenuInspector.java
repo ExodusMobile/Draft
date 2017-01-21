@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+
 class ContextMenuInspector {
 
     ContextMenu setContentMenuOptions(ContextMenu menu, View v, Button[] buttons, TextView[] textViews, ImageView[] imageViews, CardView[] cardViews) {
@@ -49,7 +51,7 @@ class ContextMenuInspector {
 
     void setContextMenuItemsOptions(MenuItem item, Object tag, TextView[] textViews, ImageView[] imageViews,
                                     Button[] buttons, CardView[] cardViews, int ID, EditText editText,
-                                    EditText editText1, Button button, Button button1, LinearLayout linearLayout, ImageView[] imageViews1, ViewInspector viewInspector) {
+                                    EditText editText1, Button button, Button button1, LinearLayout linearLayout, ImageView[] imageViews1, ViewInspector viewInspector, BottomNavigationBar bar) {
         if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) {
             switch (item.getItemId())
             {
@@ -59,6 +61,7 @@ class ContextMenuInspector {
                     button.setVisibility(View.VISIBLE);
                     editText.setHint("Напишите Ваш текст");
                     editText.setText(textViews[ID].getText().toString());
+                    bar.hide();
                     break;
 
                 case 2:
@@ -67,6 +70,7 @@ class ContextMenuInspector {
                     editText.setInputType(InputType.TYPE_CLASS_PHONE);
                     editText.setHint("Размер текста");
                     editText.setText("");
+                    bar.hide();
                     break;
                 case 3:
 
@@ -84,6 +88,7 @@ class ContextMenuInspector {
                     editText.setVisibility(View.VISIBLE);
                     button.setVisibility(View.VISIBLE);
                     button1.setVisibility(View.VISIBLE);
+                    bar.hide();
                     editText.setInputType(InputType.TYPE_CLASS_PHONE);
                     editText.setText("");
                     break;
@@ -91,6 +96,7 @@ class ContextMenuInspector {
                     editText.setVisibility(View.VISIBLE);
                     button.setVisibility(View.VISIBLE);
                     button1.setVisibility(View.VISIBLE);
+                    bar.hide();
                     editText.setInputType(InputType.TYPE_CLASS_PHONE);
                     editText.setText("");
                     break;
@@ -99,6 +105,7 @@ class ContextMenuInspector {
                     editText.setVisibility(View.VISIBLE);
                     button.setVisibility(View.VISIBLE);
                     button1.setVisibility(View.VISIBLE);
+                    bar.hide();
                     editText.setText(buttons[ID].getText().toString());
                     break;
                 case 4:
@@ -116,6 +123,7 @@ class ContextMenuInspector {
                     viewInspector.setPropertiesForView(imageViews[ID]);
                     break;
                 case 3:
+                    bar.hide();
                     button1.setVisibility(View.VISIBLE);
                     editText.setHint("Высота (Минимальные размеры: 300px)");
                     editText1.setHint("Ширина (Минимальные размеры: 300px)");

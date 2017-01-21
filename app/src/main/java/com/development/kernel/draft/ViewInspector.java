@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.squareup.picasso.Picasso;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -54,12 +55,14 @@ class ViewInspector {
 
     private int countOfLinearLayouts = 0;
     private LinearLayout[] linearLayouts;
+    private BottomNavigationBar bar;
 
-    ViewInspector(LayoutParams layoutParams, LinearLayout linearLayout, LinearLayout[] linearLayouts, MainActivity mainActivity) { //инициализация обязательных параметров
+    ViewInspector(LayoutParams layoutParams, LinearLayout linearLayout, LinearLayout[] linearLayouts, MainActivity mainActivity, BottomNavigationBar bar) { //инициализация обязательных параметров
         this.viewParams = layoutParams;
         this.linearLayout = linearLayout;
         this.mainActivity = mainActivity;
         this.linearLayouts = linearLayouts;
+        this.bar = bar;
     }
 
     Button setDefaultViewOptions(Button button) {  //назначает начальные настройки кнопке и тексту перегружен (2)
@@ -209,9 +212,7 @@ class ViewInspector {
         switch (WIS)
         {
             case 1:
-
                 textView.setText(editText.getText().toString());
-
                 break;
             case 2:
                 try {
