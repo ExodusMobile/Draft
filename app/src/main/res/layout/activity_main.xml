@@ -42,57 +42,50 @@
     <include layout="@layout/content_scrolling" />
 
 
-    <LinearLayout
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="vertical">
+        android:id="@+id/floatingbutton"
+        app:fab_addButtonColorNormal="#7db343"
+        app:fab_addButtonColorPressed="#5a842e"
+        android:layout_gravity="right"
 
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:layout_width="match_parent"
+        app:fab_labelStyle="@style/menu_label_style">
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/floatingbutton"
-            app:fab_addButtonColorNormal="#7db343"
-            app:fab_addButtonColorPressed="#5a842e"
-            android:layout_gravity="right"
-            app:fab_labelStyle="@style/menu_label_style">
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/action1"
-                fab:fab_title="Создать кнопку"
-                fab:fab_colorNormal="#7db343"
-                app:fab_colorPressed="#5a842e"/>
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/action2"
-                fab:fab_title="Создать строку"
-                fab:fab_colorNormal="#7db343"
-                app:fab_colorPressed="#5a842e"/>
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/action3"
-                fab:fab_title="Создать изображение"
-                fab:fab_colorNormal="#7db343"
-                app:fab_colorPressed="#5a842e"/>
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/action4"
-                app:fab_title="Создать холст"
-                fab:fab_colorNormal="#7db343"
-                app:fab_colorPressed="#5a842e"/>
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+            android:id="@+id/action1"
+            fab:fab_title="Создать кнопку"
+            fab:fab_colorNormal="#7db343"
+            app:fab_colorPressed="#5a842e"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/action2"
+            fab:fab_title="Создать строку"
+            fab:fab_colorNormal="#7db343"
+            app:fab_colorPressed="#5a842e"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/action3"
+            fab:fab_title="Создать изображение"
+            fab:fab_colorNormal="#7db343"
+            app:fab_colorPressed="#5a842e"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/action4"
+            app:fab_title="Создать холст"
+            fab:fab_colorNormal="#7db343"
+            app:fab_colorPressed="#5a842e"/>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-        <com.ashokvarma.bottomnavigation.BottomNavigationBar
-            android:layout_gravity="bottom"
-            android:id="@+id/bottom_navigation_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
+    <com.ashokvarma.bottomnavigation.BottomNavigationBar
+        android:layout_gravity="bottom"
+        android:id="@+id/bottom_navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

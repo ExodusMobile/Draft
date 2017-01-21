@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
                 .setMode(BottomNavigationBar.MODE_DEFAULT)
                 .initialise();
-
+        bottomNavigationBar.setAutoHideEnabled(true);
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.android_main_context);
         linearLayout1 = (LinearLayout) findViewById(R.id.linear_layout);
@@ -118,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        bottomNavigationBar.show();
         if(v.getTag().equals("Header"))
         {
             menu.add(0,0,0,"Изменить шапку");
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         floatingActionsMenu.collapse();
         switch (view.getId()) {
             case R.id.button:
-                bottomNavigationBar.show();
+
             if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
 
             else if (buttons[ID] != null && tag.equals(buttons[ID].getTag())) buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText);
@@ -217,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_close:
 
                 linearLayout1.setVisibility(View.GONE);
-                bottomNavigationBar.show();
+
                 break;
             case R.id.action1:
                 buttons[countOfButtons] = viewInspector.setDefaultViewOptions(new Button(this)); //создаем кнопку и назначаем ей начальные найтроки в viewInspector
