@@ -47,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         // Show Progress Dialog
         prgDialog = new ProgressDialog(this);
         // Set Progress Dialog Text
-        prgDialog.setTitle("Please wait...");
-        prgDialog.setMessage("Please wait...");
+        prgDialog.setTitle("Пожалуйста, подождите...");
+        prgDialog.setMessage("Идет авторизация...");
         // Set Cancelable as False
         prgDialog.setCancelable(false);
 

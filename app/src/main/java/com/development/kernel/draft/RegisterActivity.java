@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // Instantiate Progress Dialog object
         prgDialog = new ProgressDialog(this);
         // Set Progress Dialog Text
-        prgDialog.setMessage("Please wait...");
+        prgDialog.setMessage("Пожалуйста, подождите...");
         // Set Cancelable as False
         prgDialog.setCancelable(false);
         button = (Button) findViewById(R.id.btnLinkToLoginScreen);
@@ -59,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
     public void registerUser(View view){
-        Log.d("HI","gigi");
         // Get NAme ET control value
         String name = nameET.getText().toString();
         // Get Email ET control value

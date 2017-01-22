@@ -247,24 +247,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.color_black:
                 if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#000000"));
+                if(cardViews[ID] != null && tag.equals(cardViews[ID].getTag())) cardViews[ID].setBackgroundColor(Color.parseColor("#000000"));
                 break;
             case R.id.color_green:
                 if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#8CCB5E"));
+                if(cardViews[ID] != null && tag.equals(cardViews[ID].getTag())) cardViews[ID].setBackgroundColor(Color.parseColor("#8CCB5E"));
                 break;
             case R.id.color_blue:
                 if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#000080"));
+                if(cardViews[ID] != null && tag.equals(cardViews[ID].getTag())) cardViews[ID].setBackgroundColor(Color.parseColor("#000080"));
                 break;
             case R.id.color_red:
                 if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#EE3B3B"));
+                if(cardViews[ID] != null && tag.equals(cardViews[ID].getTag())) cardViews[ID].setBackgroundColor(Color.parseColor("#EE3B3B"));
                 break;
             case R.id.color_gray:
                 if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#BEBEBE"));
+                if(cardViews[ID] != null && tag.equals(cardViews[ID].getTag())) cardViews[ID].setBackgroundColor(Color.parseColor("#BEBEBE"));
                 break;
             case R.id.color_purple:
                 if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#A020F0"));
+                if(cardViews[ID] != null && tag.equals(cardViews[ID].getTag())) cardViews[ID].setBackgroundColor(Color.parseColor("#A020F0"));
                 break;
             case R.id.color_orange:
                 if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#FF8C00"));
+                if(cardViews[ID] != null && tag.equals(cardViews[ID].getTag())) cardViews[ID].setBackgroundColor(Color.parseColor("#FF8C00"));
                 break;
 
             //Standart_Colors--------------------------------------------
