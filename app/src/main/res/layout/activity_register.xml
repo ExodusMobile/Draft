@@ -26,7 +26,13 @@
             android:textSize="25sp"
             android:textAlignment="center"
             android:textStyle="bold" />
-        <!-- Name Label -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/version_name"
+            android:textSize="15sp"
+            android:textAlignment="center" />
 
 
         <EditText
@@ -40,7 +46,10 @@
             android:background="@drawable/edit_text_style"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:layout_height="wrap_content" android:hint="Введите имя"/>
+            android:layout_height="wrap_content"
+            android:hint="Введите имя"
+            android:maxLength="35"
+            android:maxLines="1" />
 
         <!-- Email Label -->
 
@@ -59,7 +68,9 @@
             android:paddingBottom="10dp"
             android:background="@drawable/edit_text_style"
             android:hint="Введите email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:maxLength="35"
+            android:maxLines="1" />
 
         <EditText
             android:id="@+id/registerPassword"
@@ -74,7 +85,9 @@
             android:paddingBottom="10dp"
             android:background="@drawable/edit_text_style"
             android:hint="Введите пароль"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:maxLength="35"
+            android:maxLines="1" />
 
 
         <!-- Error message -->
@@ -103,7 +116,6 @@
             android:id="@+id/btnLinkToLoginScreen"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-
             android:background="@null"
             android:text="Вход"
             android:textColor="#228b22"

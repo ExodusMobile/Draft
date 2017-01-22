@@ -80,14 +80,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 params.put("username", email);
                 // Put Http parameter password with value of Password Edit View control
                 params.put("password", password);
-                // Invoke RESTful Web Service with Http parameters
+
                 invokeWS(params);
             // When Email is invalid
 
         }
         // When any of the Edit View control left blank
         else {
-            Toast.makeText(getApplicationContext(), "Please fill the form, don't leave any field blank", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Пожалуйста, заполните все поля =)", Toast.LENGTH_LONG).show();
         }
 
 
@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                         navigateToLoginActivity();
                         // Display successfully registered message using Toast
-                        Toast.makeText(getApplicationContext(), "You are successfully registered!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Вы успешно зарегестрировались", Toast.LENGTH_LONG).show();
 
                     } else {
                         errorMsg.setText(obj.getString("error_msg"));
@@ -119,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
-                    Toast.makeText(getApplicationContext(), "Error Occured [Server's JSON response might be invalid]!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Сервер Json не отвечает!", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
 
                 }
@@ -132,15 +132,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 prgDialog.hide();
                 // When Http response code is '404'
                 if (statusCode == 404) {
-                    Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Ресурс не найден", Toast.LENGTH_LONG).show();
                 }
                 // When Http response code is '500'
                 else if (statusCode == 500) {
-                    Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Что-то пошло не так с сервером =(", Toast.LENGTH_LONG).show();
                 }
                 // When Http response code other than 404, 500
                 else {
-                    Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Неизвестная ошибка, возможно дефайс не подключен к Интернету", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -151,6 +151,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // Clears History of Activity
         loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(loginIntent);
+        this.finish();
     }
 
     public void setDefaultValues(){

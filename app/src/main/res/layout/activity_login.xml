@@ -20,7 +20,7 @@
             android:src="@drawable/draft_sticker_2"/>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip"
             android:layout_marginTop="15dp"
@@ -28,6 +28,12 @@
             android:textSize="25sp"
             android:textAlignment="center"
             android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/version_name"
+            android:textSize="15sp"
+            android:textAlignment="center" />
 
         <EditText
             android:id="@+id/loginEmail"
@@ -42,7 +48,9 @@
             android:paddingBottom="10dp"
             android:layout_height="wrap_content"
             android:hint="Enter your Email ID"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:maxLength="35"
+            android:maxLines="1" />
 
 
         <EditText
@@ -58,7 +66,9 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:hint="Enter Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:maxLength="35"
+            android:maxLines="1" />
 
         <TextView
             android:id="@+id/login_error"

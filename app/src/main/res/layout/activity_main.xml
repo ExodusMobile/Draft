@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@drawable/background"
+
     tools:context="com.development.kernel.draft.MainActivity">
 
 
@@ -14,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
+
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -22,17 +25,23 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="#45bdcb"
+
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:id="@+id/main.backdrop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:fitsSystemWindows="true"
-                android:src="@drawable/material_flat"
-                app:layout_collapseMode="parallax" />
-           
+                <ImageView
+                    android:id="@+id/main.backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true"
+                    android:src="@drawable/material_design"
+
+                    app:layout_collapseMode="parallax" />
+
+
+
+
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

@@ -2,6 +2,7 @@ package com.development.kernel.draft;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText editText;
     private EditText editText1;
     private Button button;
-    private Button button1;
+    private Button button_close;
     private ContextMenuInspector contextMenuInspector;
     private LinearLayout hintLayout;
     private LinearLayout linearLayout1;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FloatingActionsMenu floatingActionsMenu;
     private BottomNavigationBar bottomNavigationBar;
+    private HorizontalScrollView color_scroll;
 
 
 
@@ -64,6 +67,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+        color_scroll = (HorizontalScrollView) findViewById(R.id.color_scroll);
+
+        //Standart_Colors--------------------------------------------
+
+        Button color_black = (Button) findViewById(R.id.color_black);
+        Button color_green = (Button) findViewById(R.id.color_green);
+        Button color_blue = (Button) findViewById(R.id.color_blue);
+        Button color_red = (Button) findViewById(R.id.color_red);
+        Button color_gray = (Button) findViewById(R.id.color_gray);
+        Button color_purple = (Button) findViewById(R.id.color_purple);
+        Button color_orange = (Button) findViewById(R.id.color_orange);
+
+        color_black.setOnClickListener(this);
+        color_green.setOnClickListener(this);
+        color_blue.setOnClickListener(this);
+        color_red.setOnClickListener(this);
+        color_gray.setOnClickListener(this);
+        color_purple.setOnClickListener(this);
+        color_orange.setOnClickListener(this);
+
+
+        //Standart_Colors--------------------------------------------
 
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.ic_recent_actors_white_36dp,"Companies"))
@@ -88,9 +113,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText = (EditText) findViewById(R.id.edit_text);
         editText1 = (EditText) findViewById(R.id.edit_text1);
         button = (Button) findViewById(R.id.button);
-        button1 = (Button) findViewById(R.id.button_close);
+        button_close = (Button) findViewById(R.id.button_close);
         button.setOnClickListener(this);
-        button1.setOnClickListener(this);
+        button_close.setOnClickListener(this);
         imageViews1 = new ImageView[300];
         hintLayout = (LinearLayout) findViewById(R.id.hint_layout);
         headerImage = (ImageView) findViewById(R.id.main_backdrop);
@@ -124,9 +149,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else {
             editText1.setVisibility(View.GONE);
-            button1.setVisibility(View.GONE);
+            button_close.setVisibility(View.GONE);
             button.setVisibility(View.GONE);
             editText.setVisibility(View.GONE);
+            color_scroll.setVisibility(View.GONE);
             contextMenuInspector = new ContextMenuInspector();
             contextMenuInspector.setContentMenuOptions(menu, v, buttons, textViews, imageViews, cardViews);
             linearLayout1.setVisibility(View.GONE);
@@ -149,7 +175,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons,
-                    cardViews, ID, editText, editText1, button, button1, linearLayout1, imageViews1, viewInspector, bottomNavigationBar); //управляем действиями
+                    cardViews, ID, editText, editText1, button, button_close, linearLayout1,
+                    imageViews1, viewInspector, bottomNavigationBar, color_scroll); //управляем действиями
         }
         return super.onContextItemSelected(item);
     }
@@ -164,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selectImagePublic = selectedImage;
                     Picasso.with(this)
                             .load(selectedImage)
-                            .resize(1080, 750)
+                            .resize(1080, 900)
                             .into(imageViews[ID]);
                 }
                     break;
@@ -215,10 +242,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             else if(cardViews[ID] != null && tag.equals(cardViews[ID].getTag())) cardViews[ID] = viewInspector.setPropertiesForView(cardViews[ID],imageViews,editText,ID,linearLayout1);
                 break;
+
+            //Standart_Colors--------------------------------------------
+
+            case R.id.color_black:
+                if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#000000"));
+                break;
+            case R.id.color_green:
+                if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#8CCB5E"));
+                break;
+            case R.id.color_blue:
+                if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#000080"));
+                break;
+            case R.id.color_red:
+                if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#EE3B3B"));
+                break;
+            case R.id.color_gray:
+                if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#BEBEBE"));
+                break;
+            case R.id.color_purple:
+                if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#A020F0"));
+                break;
+            case R.id.color_orange:
+                if(textViews[ID]!= null && tag.equals(textViews[ID].getTag())) textViews[ID].setTextColor(Color.parseColor("#FF8C00"));
+                break;
+
+            //Standart_Colors--------------------------------------------
+
             case R.id.button_close:
-
                 linearLayout1.setVisibility(View.GONE);
-
                 break;
             case R.id.action1:
                 buttons[countOfButtons] = viewInspector.setDefaultViewOptions(new Button(this)); //создаем кнопку и назначаем ей начальные найтроки в viewInspector

@@ -69,10 +69,10 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("username", email);
                 // Put Http parameter password with value of Password Edit Value control
                 params.put("password", password);
-                // Invoke RESTful Web Service with Http parameters
+
                 invokeWS(params);
         } else{
-            Toast.makeText(getApplicationContext(), "Please fill the form, don't leave any field blank", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Пожалуйста, заполните все поля =)", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -93,8 +93,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(obj.getBoolean("status")){
 
-                        Toast.makeText(getApplicationContext(), "You are successfully logged in!", Toast.LENGTH_LONG).show();
-                        // Navigate to Home screen
                         navigatetoHomeActivity(obj.getString("id")); //запускаем основное активити (не важно)(наверено) (не трогайте меня)
                     }
                     // Else display error message
@@ -104,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
-                    Toast.makeText(getApplicationContext(), "Error Occured [Server's JSON response might be invalid]!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Сервер Json не отвечает", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
 
                 }
@@ -116,15 +114,15 @@ public class LoginActivity extends AppCompatActivity {
                 prgDialog.hide();
                 // When Http response code is '404'
                 if(statusCode == 404){
-                    Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Ресурсы не найдены ", Toast.LENGTH_LONG).show();
                 }
                 // When Http response code is '500'
                 else if(statusCode == 500){
-                    Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Что-то пошло не так с сервером =(", Toast.LENGTH_LONG).show();
                 }
                 // When Http response code other than 404, 500
                 else{
-                    Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Неизвестная ошибка, возможно дефайс не подключен к Интернету", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -151,5 +149,12 @@ public class LoginActivity extends AppCompatActivity {
         Intent homeIntent = new Intent(getApplicationContext(),MainActivity.class);
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(homeIntent);
+    }
+
+    public void navigatetoRegisterActivity(View view) {
+        Intent goToRegisterActivity = new Intent(this, RegisterActivity.class);
+        startActivity(goToRegisterActivity);
+        goToRegisterActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        this.finish();
     }
 }

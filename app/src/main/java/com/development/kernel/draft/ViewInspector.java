@@ -55,14 +55,13 @@ class ViewInspector {
 
     private int countOfLinearLayouts = 0;
     private LinearLayout[] linearLayouts;
-    private BottomNavigationBar bar;
 
     ViewInspector(LayoutParams layoutParams, LinearLayout linearLayout, LinearLayout[] linearLayouts, MainActivity mainActivity, BottomNavigationBar bar) { //инициализация обязательных параметров
         this.viewParams = layoutParams;
         this.linearLayout = linearLayout;
         this.mainActivity = mainActivity;
         this.linearLayouts = linearLayouts;
-        this.bar = bar;
+        BottomNavigationBar bar1 = bar;
     }
 
     Button setDefaultViewOptions(Button button) {  //назначает начальные настройки кнопке и тексту перегружен (2)
@@ -106,7 +105,7 @@ class ViewInspector {
             imageView.setElevation(10);
             imageView.setTranslationZ(10);
         }
-        Picasso.with(mainActivity).load(R.drawable.rectangle).resize(500,500).into(imageView);
+        Picasso.with(mainActivity).load(R.drawable.add_image).resize(1080,608).into(imageView);
         String imageViewsTags = "ImageView:";
         imageView.setId(imageViewsId);
         imageView.setTag(imageViewsTags + String.valueOf(CountImageViewTags++));
@@ -145,7 +144,8 @@ class ViewInspector {
         WIS = item.getItemId();
     }
     private static final int NOTIFY_ID = 101;
-    public void startNotification(){
+
+    public void startNotification(){ //TODO: реализовать использование этой функции
         Context context = mainActivity.getApplicationContext();
 
         Intent notificationIntent = new Intent(context, MainActivity.class);
