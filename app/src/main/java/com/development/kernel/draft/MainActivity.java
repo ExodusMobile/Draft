@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.android_main_context);
         linearLayout1 = (LinearLayout) findViewById(R.id.linear_layout);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0, 30, 0, 30);
+        layoutParams.setMargins(0, 15, 0, 15);
         buttons = new Button[99];
         textViews = new TextView[99];
         imageViews = new ImageView[99];
@@ -212,6 +212,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else if (buttons[ID] != null && tag.equals(buttons[ID].getTag())) buttons[ID] = viewInspector.setPropertiesForView(buttons[ID], editText);
 
             else if (imageViews[ID] != null && tag.equals(imageViews[ID].getTag())) imageViews[ID] = viewInspector.setPropertiesForView(imageViews[ID], selectImagePublic, editText, editText1);
+
+            else if(cardViews[ID] != null && tag.equals(cardViews[ID].getTag())) cardViews[ID] = viewInspector.setPropertiesForView(cardViews[ID],imageViews,editText,ID,linearLayout1);
                 break;
             case R.id.button_close:
 

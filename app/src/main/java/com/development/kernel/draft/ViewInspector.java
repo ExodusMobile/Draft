@@ -229,6 +229,14 @@ class ViewInspector {
                 textView.setText(textView.getText().toString());
                 break;
             case 4:
+                try {
+                textView.setTextColor(Color.parseColor(editText.getText().toString()));
+                }
+                catch (Exception e){
+                    Toast.makeText(mainActivity,"Невверный формат ввода", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case 5:
                 CountTextViewTags--;//понижение тега
                 break;
         }
@@ -275,7 +283,7 @@ class ViewInspector {
         return imageView; //возвратить view элемент со всеми настройками
     }
 
-    CardView setPropertiesForView(CardView cardView, ImageView[] imageViews, int ID, LinearLayout linearLayout) //настройки для строки
+    CardView setPropertiesForView(CardView cardView, ImageView[] imageViews, EditText editText, int ID, LinearLayout linearLayout) //настройки для строки
     {
         switch (WIS)
         {
@@ -294,6 +302,14 @@ class ViewInspector {
                     linearLayouts[ID].addView(new CheckBox(mainActivity));
                 break;
             case 3:
+                try {
+                    cardView.setBackgroundColor(Color.parseColor(editText.getText().toString()));
+                }
+                catch (Exception e){
+                    Toast.makeText(mainActivity,"Неверный формат ввода", Toast.LENGTH_SHORT);
+                }
+                break;
+            case 4:
                 CountImageViewTags--;//понижение тега
                 break;
         }

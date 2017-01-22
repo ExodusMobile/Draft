@@ -17,32 +17,35 @@ class ContextMenuInspector {
 
     ContextMenu setContentMenuOptions(ContextMenu menu, View v, Button[] buttons, TextView[] textViews, ImageView[] imageViews, CardView[] cardViews) {
 
-        if (buttons[v.getId()] != null && v.getTag().equals(buttons[v.getId()].getTag())) {
+        if (buttons[v.getId()] != null && v.getTag().equals(buttons[v.getId()].getTag())) { //Кнопки
             menu.setHeaderTitle("Кнопка");
             menu.add(0, 1, 0, "Изменить ширину");
             menu.add(0, 2, 0, "Изменить высоту");
             menu.add(0, 3, 0, "Изменить текст");
             menu.add(0, 4, 0, "Удалить объект");
         }
-        if (textViews[v.getId()] != null && v.getTag().equals(textViews[v.getId()].getTag())) {
+        if (textViews[v.getId()] != null && v.getTag().equals(textViews[v.getId()].getTag())) { //TextView
             menu.setHeaderTitle("Строка");
             menu.add(0, 1, 0, "Изменить текст");
             menu.add(0, 2, 0, "Изменить размер текста");
             menu.add(0, 3, 0,"Центрировать");
-            menu.add(0, 4, 0, "Удалить объект");
+            menu.add(0, 4 ,0,"Изменить цвет");
+            menu.add(0, 5, 0, "Удалить объект");
+
         }
-        if (imageViews[v.getId()] != null && v.getTag().equals(imageViews[v.getId()].getTag())) {
+        if (imageViews[v.getId()] != null && v.getTag().equals(imageViews[v.getId()].getTag())) { //Изображение
             menu.setHeaderTitle("Изображение");
             menu.add(0, 1, 0, "Импорт из галереи");
             menu.add(0, 2, 0, "Сделать снимок");
             menu.add(0, 3, 0, "Изменить размеры");
             menu.add(0, 4, 0, "Удалить объект");
         }
-        if (cardViews[v.getId()] != null && v.getTag().equals(cardViews[v.getId()].getTag())) {
+        if (cardViews[v.getId()] != null && v.getTag().equals(cardViews[v.getId()].getTag())) { //Холст
             menu.setHeaderTitle("Макетный холст");
-            menu.add(1, 1, 0, "Добавить картинку");
-            menu.add(2, 2, 0, "Добавить задачу");
-            menu.add(0, 3, 0, "Удалить объект");
+            menu.add(0, 1, 0, "Добавить картинку");
+            menu.add(0, 2, 0, "Добавить задачу");
+            menu.add(0, 3, 0, "Изменить цвет фона");
+            menu.add(0, 4, 0, "Удалить объект");
         }
 
 
@@ -78,6 +81,15 @@ class ContextMenuInspector {
                     textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
                     break;
                 case 4:
+                    editField.setVisibility(View.VISIBLE);
+                    editText.setVisibility(View.VISIBLE);
+                    button.setVisibility(View.VISIBLE);
+                    editText.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT);
+                    editText.setHint("Пример ввода - \"#990061\"");
+                    editText.setText("");
+                    bar.hide();
+                    break;
+                case 5:
                     textViews[ID].setVisibility(View.GONE);
                     break;
             }
@@ -152,12 +164,22 @@ class ContextMenuInspector {
         if (cardViews[ID] != null && tag.equals(cardViews[ID].getTag())) {
             switch (item.getItemId()){
                 case 1:
-                    viewInspector.setPropertiesForView(cardViews[ID],imageViews1,ID, editField);
+                    viewInspector.setPropertiesForView(cardViews[ID],imageViews1,editText,ID, editField);
                     break;
                 case 2:
-                    viewInspector.setPropertiesForView(cardViews[ID],imageViews1,ID, editField);
+                    viewInspector.setPropertiesForView(cardViews[ID],imageViews1,editText,ID, editField);
                     break;
                 case 3:
+                    viewInspector.setPropertiesForView(cardViews[ID],imageViews1,editText,ID, editField);
+                    editField.setVisibility(View.VISIBLE);
+                    editText.setVisibility(View.VISIBLE);
+                    button.setVisibility(View.VISIBLE);
+                    editText.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT);
+                    editText.setHint("Пример ввода - \"#990061\"");
+                    editText.setText("");
+                    bar.hide();
+                    break;
+                case 4:
                     cardViews[ID].setVisibility(View.GONE);
                     break;
             }
