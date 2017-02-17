@@ -22,7 +22,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
-
     // Progress Dialog Object
     ProgressDialog prgDialog;
     // Error Msg TextView Object

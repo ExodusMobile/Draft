@@ -56,12 +56,12 @@ class ViewInspector {
     private int countOfLinearLayouts = 0;
     private LinearLayout[] linearLayouts;
 
-    ViewInspector(LayoutParams layoutParams, LinearLayout linearLayout, LinearLayout[] linearLayouts, MainActivity mainActivity, BottomNavigationBar bar) { //инициализация обязательных параметров
+    ViewInspector(LayoutParams layoutParams, LinearLayout linearLayout, LinearLayout[] linearLayouts, MainActivity mainActivity) { //инициализация обязательных параметров
         this.viewParams = layoutParams;
         this.linearLayout = linearLayout;
         this.mainActivity = mainActivity;
         this.linearLayouts = linearLayouts;
-        BottomNavigationBar bar1 = bar;
+
     }
 
     Button setDefaultViewOptions(Button button) {  //назначает начальные настройки кнопке и тексту перегружен (2)

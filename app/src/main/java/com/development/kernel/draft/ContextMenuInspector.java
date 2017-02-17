@@ -56,7 +56,7 @@ class ContextMenuInspector {
     void setContextMenuItemsOptions(MenuItem item, Object tag, TextView[] textViews, ImageView[] imageViews,
                                     Button[] buttons, CardView[] cardViews, int ID, EditText editText,
                                     EditText editText1, Button button, Button button_close, LinearLayout editField,
-                                    ImageView[] imageViews1, ViewInspector viewInspector, BottomNavigationBar bar,
+                                    ImageView[] imageViews1, ViewInspector viewInspector,
                                     HorizontalScrollView color_scroll) {
         if (textViews[ID] != null && tag.equals(textViews[ID].getTag())) {
             switch (item.getItemId())
@@ -70,7 +70,6 @@ class ContextMenuInspector {
                     editText.setHint("Напишите Ваш текст");
 
                     editText.setText(textViews[ID].getText().toString());
-                    bar.hide();
                     break;
 
                 case 2:
@@ -81,8 +80,6 @@ class ContextMenuInspector {
                     editText.setInputType(InputType.TYPE_CLASS_PHONE);
                     editText.setHint("Размер текста (sp)");
                     editText.setText("");
-
-                    bar.hide();
                     break;
                 case 3:
                     textViews[ID] = viewInspector.setPropertiesForView(textViews[ID], editText, button);
@@ -96,8 +93,7 @@ class ContextMenuInspector {
                     editText.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT);
                     editText.setHint("Пример ввода - \"#990061\"");
                     editText.setText("");
-
-                    bar.hide();
+;
                     break;
                 case 5:
                     textViews[ID].setVisibility(View.GONE);
@@ -113,7 +109,6 @@ class ContextMenuInspector {
                     button.setVisibility(View.VISIBLE);
                     button_close.setVisibility(View.VISIBLE);
 
-                    bar.hide();
                     editText.setInputType(InputType.TYPE_CLASS_PHONE);
                     editText.setText("");
                     break;
@@ -122,7 +117,7 @@ class ContextMenuInspector {
                     editText.setVisibility(View.VISIBLE);
                     button.setVisibility(View.VISIBLE);
                     button_close.setVisibility(View.VISIBLE);
-                    bar.hide();
+
                     editText.setInputType(InputType.TYPE_CLASS_PHONE);
                     editText.setText("");
                     break;
@@ -132,7 +127,7 @@ class ContextMenuInspector {
                     editText.setVisibility(View.VISIBLE);
                     button.setVisibility(View.VISIBLE);
                     button_close.setVisibility(View.VISIBLE);
-                    bar.hide();
+
                     editText.setText(buttons[ID].getText().toString());
                     break;
                 case 4:
@@ -150,7 +145,6 @@ class ContextMenuInspector {
                     viewInspector.setPropertiesForView(imageViews[ID]);
                     break;
                 case 3:
-                    bar.hide();
                     editField.setVisibility(View.VISIBLE);
                     button_close.setVisibility(View.VISIBLE);
                     editText.setHint("Высота");
@@ -188,7 +182,6 @@ class ContextMenuInspector {
                     editText.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT);
                     editText.setHint("Пример ввода - \"#990061\"");
                     editText.setText("");
-                    bar.hide();
                     break;
                 case 4:
                     cardViews[ID].setVisibility(View.GONE);

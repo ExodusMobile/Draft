@@ -1,15 +1,21 @@
 package com.development.kernel.draft;
 
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.audiofx.BassBoost;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,16 +63,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView headerImage;
 
     private FloatingActionsMenu floatingActionsMenu;
-    private BottomNavigationBar bottomNavigationBar;
     private HorizontalScrollView color_scroll;
 
+    private DrawerLayout mDrawerLayout;
+    Intent intent;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        // Adding menu icon to Toolbar
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher);
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
+// Set behavior of Navigation drawer
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    // This method will trigger on item Click of navigation menu
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // Set item in checked state
+
+                        menuItem.setChecked(true);
+                        // TODO: handle navigation
+                        int id = menuItem.getItemId();
+                        switch (id) {
+                            case R.id.first:
+                                intent = new Intent(MainActivity.this, ProfileActivity.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.second:
+                                intent = new Intent(MainActivity.this, ProjectsActivity.class);
+                                startActivity(intent);
+                                break;
+                            case R.id.third:
+                                break;
+                            case R.id.settings:
+                                intent = new Intent(MainActivity.this, SettingsActivity.class);
+                                startActivity(intent);
+                                break;
+                        }
+                        // Closing drawer on item click
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
+
         color_scroll = (HorizontalScrollView) findViewById(R.id.color_scroll);
 
         //Standart_Colors--------------------------------------------
@@ -90,16 +138,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Standart_Colors--------------------------------------------
 
-        bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.ic_recent_actors_white_36dp,"Companies"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_settings_white_36dp,"Settings"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_reorder_white_36dp,"Edit"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_info_white_36dp,"Help"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_account_circle_white_36dp,"Profile"))
-                .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
-                .setMode(BottomNavigationBar.MODE_DEFAULT)
-                .initialise();
-        bottomNavigationBar.setAutoHideEnabled(true);
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.android_main_context);
         linearLayout1 = (LinearLayout) findViewById(R.id.linear_layout);
@@ -136,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         action4.setOnClickListener(this);
 
 
-        viewInspector = new ViewInspector(layoutParams, linearLayout, linearLayouts, this, bottomNavigationBar); //создаем экземпляр нашего класса
+        viewInspector = new ViewInspector(layoutParams, linearLayout, linearLayouts, this); //создаем экземпляр нашего класса
     }
 
 
@@ -176,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons,
                     cardViews, ID, editText, editText1, button, button_close, linearLayout1,
-                    imageViews1, viewInspector, bottomNavigationBar, color_scroll); //управляем действиями
+                    imageViews1, viewInspector, color_scroll); //управляем действиями
         }
         return super.onContextItemSelected(item);
     }
@@ -191,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selectImagePublic = selectedImage;
                     Picasso.with(this)
                             .load(selectedImage)
-                            .resize(1080, 900)
+                            .resize(800, 900)
                             .into(imageViews[ID]);
                 }
                     break;
@@ -201,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         selectImagePublic = selectedImage;
                         Picasso.with(this)
                                 .load(selectedImage)
-                                .resize(1080, 700)
+                                .resize(800, 900)
                                 .into(imageViews[ID]);
                     }
                     break;
