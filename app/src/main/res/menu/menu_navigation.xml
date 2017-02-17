@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:icon="@mipmap/ic_launcher"
+            android:tint="#ba32"
+            android:title="Профиль"
+            android:id="@+id/first"/>
+        <item
+            android:icon="@mipmap/ic_launcher"
+            android:tint="#ba32"
+            android:title="Проекты"
+            android:id="@+id/second"/>
+        <item
+            android:icon="@mipmap/ic_launcher"
+            android:tint="#ba32"
+            android:title="Холст"
+            android:id="@+id/third"/>
+        <item
+            android:icon="@mipmap/ic_launcher"
+            android:tint="#ba32"
+            android:title="Настройки"
+            android:id="@+id/settings"/>
+    </group>
+</menu>
