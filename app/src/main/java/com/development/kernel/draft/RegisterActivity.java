@@ -2,8 +2,10 @@ package com.development.kernel.draft;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,17 +25,21 @@ import cz.msebera.android.httpclient.Header;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
     // Progress Dialog Object
-    ProgressDialog prgDialog;
+    private ProgressDialog prgDialog;
     // Error Msg TextView Object
-    TextView errorMsg;
+    private TextView errorMsg;
     // Name Edit View Object
-    EditText nameET;
+    private EditText nameET;
     // Email Edit View Object
-    EditText emailET;
+    private EditText emailET;
     // Password Edit View Object
-    EditText pwdET;
+    private EditText pwdET;
 
-    Button button;
+    private SharedPreferences sPref;
+    final String SAVED_NAME = "userName";
+    final String SAVED_SUBTITLE = "userSubtitle";
+
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +117,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         // Display successfully registered message using Toast
                         Toast.makeText(getApplicationContext(), "Вы успешно зарегестрировались", Toast.LENGTH_LONG).show();
 
+                        sPref = getPreferences(MODE_APPEND);
+                        SharedPreferences.Editor ed = sPref.edit();
+                        ed.putString("userName", nameET.getText().toString());
+                        ed.putString("userSubtitle", emailET.getText().toString());
+                        ed.apply();
+
+
                     } else {
                         errorMsg.setText(obj.getString("error_msg"));
                         Toast.makeText(getApplicationContext(), obj.getString("error_msg"), Toast.LENGTH_LONG).show();
@@ -143,6 +156,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
     }
+
 
     public void navigateToLoginActivity(){
         Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);

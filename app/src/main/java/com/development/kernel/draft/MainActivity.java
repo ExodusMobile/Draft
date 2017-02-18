@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         // Adding menu icon to Toolbar
@@ -85,13 +86,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 // Set behavior of Navigation drawer
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
-                    // This method will trigger on item Click of navigation menu
+
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // Set item in checked state
-
                         menuItem.setChecked(true);
-                        // TODO: handle navigation
                         int id = menuItem.getItemId();
                         switch (id) {
                             case R.id.first:
@@ -210,8 +208,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivityForResult(photoPickerIntent, HEADER_REQUEST);
         }
         else {
-
-
             contextMenuInspector.setContextMenuItemsOptions(item, tag, textViews, imageViews, buttons,
                     cardViews, ID, editText, editText1, button, button_close, linearLayout1,
                     imageViews1, viewInspector, color_scroll); //управляем действиями
