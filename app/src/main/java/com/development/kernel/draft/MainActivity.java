@@ -1,11 +1,10 @@
 package com.development.kernel.draft;
 
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.audiofx.BassBoost;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,8 +26,6 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.ashokvarma.bottomnavigation.BottomNavigationBar;
-import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.squareup.picasso.Picasso;
@@ -51,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int countOfImageViews = 0;
     private int countOfCardViews = 0;
     private int ID;
+    private int ID_USER;
     private Object tag;
     private EditText editText;
     private EditText editText1;
@@ -73,9 +71,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) { //назначаем начальные настройки
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Intent intent1 = getIntent();
+        ID_USER = intent1.getIntExtra("ID",0);
+        Log.d("Id_User1",String.valueOf(ID_USER));
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         // Adding menu icon to Toolbar
         ActionBar supportActionBar = getSupportActionBar();
@@ -94,7 +96,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         switch (id) {
                             case R.id.first:
                                 intent = new Intent(MainActivity.this, ProfileActivity.class);
+                                intent.putExtra("ID",ID_USER);
                                 startActivity(intent);
+
                                 break;
                             case R.id.second:
                                 intent = new Intent(MainActivity.this, ProjectsActivity.class);
@@ -124,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button color_gray = (Button) findViewById(R.id.color_gray);
         Button color_purple = (Button) findViewById(R.id.color_purple);
         Button color_orange = (Button) findViewById(R.id.color_orange);
+        
 
         color_black.setOnClickListener(this);
         color_green.setOnClickListener(this);

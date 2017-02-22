@@ -2,6 +2,7 @@ package com.development.kernel.draft;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dd.morphingbutton.MorphingButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -32,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailET;
     // Passwprd Edit View Object
     EditText pwdET;
+    MorphingButton.Params circle;
+    MorphingButton btnMorph;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,16 @@ public class LoginActivity extends AppCompatActivity {
         // Set Cancelable as False
         prgDialog.setCancelable(false);
 
+        btnMorph = (MorphingButton) findViewById(R.id.btnLogin);
+
+        circle = MorphingButton.Params.create()
+                .duration(500)
+                .cornerRadius(200) // 56 dp
+                .width(200) // 56 dp
+                .height(200) // 56 dp
+                .color(Color.parseColor("#8BC34A")) // normal state color
+                .colorPressed(Color.parseColor("#689F38")) // pressed state color
+                .icon(R.drawable.ic_done_white_24dp); // icon
     }
 
     public void loginUser(View view){
@@ -83,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
 
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get("http://195.19.44.155/samsung/api/index.php?method=login",params, new JsonHttpResponseHandler() { //наверное подключается к серверу и выполняется метод логин
+        client.get("http://195.19.44.155/anton/index.php?method=login",params, new JsonHttpResponseHandler() { //наверное подключается к серверу и выполняется метод логин
             @Override // параметры метода client.get() идут в аргументах
             public void onSuccess(int statusCode, Header[] headers, JSONObject obj) { // если операция прошла успешно
                 //super.onSuccess(statusCode,headers,res);
@@ -92,8 +106,8 @@ public class LoginActivity extends AppCompatActivity {
                 try {
 
                     if(obj.getBoolean("status")){
-
-                        navigatetoHomeActivity(obj.getString("id")); //запускаем основное активити (не важно)(наверено) (не трогайте меня)
+                        btnMorph.morph(circle);
+                        navigatetoHomeActivity(obj.getString("id"),obj.getInt("id1")); //запускаем основное активити (не важно)(наверено) (не трогайте меня)
                     }
                     // Else display error message
                     else{
@@ -122,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 // When Http response code other than 404, 500
                 else{
-                    Toast.makeText(getApplicationContext(), "Неизвестная ошибка, возможно дефайс не подключен к Интернету", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Неизвестная ошибка, возможно девайс не подключен к Интернету", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -133,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void navigatetoHomeActivity(String session){
+    public void navigatetoHomeActivity(String session, int ID){
         DatabaseHandler db = new DatabaseHandler(this);
         Log.e("SESSION","Inserting..");
         db.addSession(new ASession(1, session));
@@ -148,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.e("SESSION", getBaseContext().getDatabasePath("successSessions").getAbsolutePath());
         Intent homeIntent = new Intent(getApplicationContext(),MainActivity.class);
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        homeIntent.putExtra("ID", ID);
         startActivity(homeIntent);
     }
 

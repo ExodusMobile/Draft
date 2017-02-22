@@ -2,6 +2,7 @@ package com.development.kernel.draft;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.AppBarLayout;
@@ -14,11 +15,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 public class ProfileActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
@@ -31,11 +40,19 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
     private TextView userSubtitle;
     private boolean mIsAvatarShown = true;
 
+    private TextView companyName;
+    private TextView companyDesc;
+    private TextView companyLongDesc;
+    private Fragment frag1;
+    private ViewPager viewPager;
+
     private ImageView mProfileImage;
     private int mMaxScrollSize;
     private SharedPreferences sPref;
     final String SAVED_NAME = "userName";
     final String SAVED_SUBTITLE = "userSubtitle";
+
+    private ProgressDialog prgDialog;
 
 
     @Override
@@ -43,16 +60,33 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        loadText();
+        prgDialog = new ProgressDialog(this);
+        // Set Progress Dialog Text
+        prgDialog.setMessage("Пожалуйста, подождите...");
+        // Set Cancelable as False
+        prgDialog.setCancelable(false);
+        RequestParams params = new RequestParams();
+        Intent getId = getIntent();
+
+
+        int id = getId.getIntExtra("ID",0);
+        params.put("id", 2);
 
         userName = (TextView) findViewById(R.id.user_name);
         userSubtitle = (TextView) findViewById(R.id.user_subtitle);
 
+
+
+
         TabLayout tabs = (TabLayout) findViewById(R.id.materialup_tabs);
-        ViewPager viewPager  = (ViewPager) findViewById(R.id.materialup_viewpager);
+        viewPager  = (ViewPager) findViewById(R.id.materialup_viewpager);
         AppBarLayout appbarLayout = (AppBarLayout) findViewById(R.id.materialup_appbar);
         tabs.addTab(tabs.newTab().setText("Основная").setTag(1));
         tabs.addTab(tabs.newTab().setText("Дополнительная").setTag(2));
+
+
+
+
         mProfileImage = (ImageView) findViewById(R.id.materialup_profile_image);
 
         appbarLayout.addOnOffsetChangedListener(this);
@@ -60,9 +94,11 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-
         viewPager.setAdapter(new TabsAdapter(getSupportFragmentManager()));
         tabs.setupWithViewPager(viewPager);
+
+
+        invokeWS(params);
 
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
@@ -96,8 +132,10 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
                         return true;
                     }
                 });
-
     }
+
+
+
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -119,22 +157,57 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
                     .start();
         }
     }
-    void loadText() {
-        sPref = getPreferences(MODE_APPEND);
-        String savedName = sPref.getString("userName", " ");
-        Log.d("savedtext", "4343434");
-
-        String savedSubtitle = sPref.getString("userSubtitle", " ");
-        try {
 
 
-            userName.setText(savedName);
-            userSubtitle.setText(savedSubtitle);
-        }
-        catch (Exception e){
-            Log.d("savedtext", savedName);
-        }
+    public void invokeWS(RequestParams params){
+        // Show Progress Dialog
+        prgDialog.show();
 
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        client.get("https://uniteddev.pw/api.php?target=company", params, new JsonHttpResponseHandler() {
+            public void onSuccess(int statusCode, Header[] headers, JSONObject obj) {
+                // Hide Progress Dialog
+                prgDialog.hide();
+                try {
+
+                    companyName = (TextView) viewPager.findViewById(R.id.company_name);
+                    companyDesc = (TextView) viewPager.findViewById(R.id.company_shortdesc);
+                    companyLongDesc = (TextView) viewPager.findViewById(R.id.company_longdesc);
+
+                    companyName.setText("-"+obj.getString("name")+" -");
+                    companyDesc.setText(obj.getString("shortdesc"));
+                    companyLongDesc.setText(obj.getString("desc"));
+
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    Toast.makeText(getApplicationContext(), "Сервер Json не отвечает!", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+
+                }
+            }
+
+            // When the response returned by REST has Http response code other than '200'
+
+            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                // Hide Progress Dialog
+                prgDialog.hide();
+                // When Http response code is '404'
+                if (statusCode == 404) {
+                    Toast.makeText(getApplicationContext(), "Ресурс не найден", Toast.LENGTH_LONG).show();
+                }
+                // When Http response code is '500'
+                else if (statusCode == 500) {
+                    Toast.makeText(getApplicationContext(), "Что-то пошло не так с сервером =(", Toast.LENGTH_LONG).show();
+                }
+                // When Http response code other than 404, 500
+                else {
+                    Toast.makeText(getApplicationContext(), "Неизвестная ошибка, возможно дефайс не подключен к Интернету", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
     class TabsAdapter extends FragmentPagerAdapter {
         public TabsAdapter(FragmentManager fm) {

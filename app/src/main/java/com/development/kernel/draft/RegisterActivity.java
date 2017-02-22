@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         prgDialog.show();
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://195.19.44.155/samsung/api/index.php?method=register", params, new JsonHttpResponseHandler() {
+        client.get("http://195.19.44.155/anton/index.php?method=register", params, new JsonHttpResponseHandler() {
             // When the response returned by REST has Http response code '200'
 
             public void onSuccess(int statusCode, Header[] headers, JSONObject obj) {
