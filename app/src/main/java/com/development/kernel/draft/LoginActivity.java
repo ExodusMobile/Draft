@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     // Error Msg TextView Object
     TextView errorMsg;
     // Email Edit View Object
-    EditText emailET;
+    EditText loginET;
     // Passwprd Edit View Object
     EditText pwdET;
     MorphingButton.Params circle;
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         // Find Error Msg Text View control by ID
         errorMsg = (TextView)findViewById(R.id.login_error);
         // Find Email Edit View control by ID
-        emailET = (EditText)findViewById(R.id.loginEmail);
+        loginET = (EditText)findViewById(R.id.loginEmail);
         // Find Password Edit View control by ID
         pwdET = (EditText)findViewById(R.id.loginPassword);
         // Instantiate Progress Dialog object
@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginUser(View view){
         // Get Email Edit View Value
-        String email = emailET.getText().toString();
+        String email = loginET.getText().toString();
         // Get Password Edit View Value
         String password = pwdET.getText().toString();
         // Instantiate Http Request Param Object
@@ -80,10 +80,11 @@ public class LoginActivity extends AppCompatActivity {
             // When Email entered is Valid
 
                 // Put Http parameter username with value of Email Edit View control
-                params.put("username", email);
+                params.put("login", email);
                 // Put Http parameter password with value of Password Edit Value control
                 params.put("password", password);
 
+                params.put("useapi",1);
                 invokeWS(params);
         } else{
             Toast.makeText(getApplicationContext(), "Пожалуйста, заполните все поля =)", Toast.LENGTH_LONG).show();
@@ -97,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get("http://195.19.44.155/anton/index.php?method=login",params, new JsonHttpResponseHandler() { //наверное подключается к серверу и выполняется метод логин
+        client.get("http://195.19.44.155/anton/core/api.php?action=Auth",params, new JsonHttpResponseHandler() { //наверное подключается к серверу и выполняется метод логин
             @Override // параметры метода client.get() идут в аргументах
             public void onSuccess(int statusCode, Header[] headers, JSONObject obj) { // если операция прошла успешно
                 //super.onSuccess(statusCode,headers,res);
@@ -105,9 +106,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 try {
 
-                    if(obj.getBoolean("status")){
+                    if(obj.getInt("code")==25){
                         btnMorph.morph(circle);
-                        navigatetoHomeActivity(obj.getString("id"),obj.getInt("id1")); //запускаем основное активити (не важно)(наверено) (не трогайте меня)
+                        navigatetoHomeActivity(obj.getString("apimessage")); //запускаем основное активити (не важно)(наверено) (не трогайте меня)
                     }
                     // Else display error message
                     else{
@@ -147,22 +148,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void navigatetoHomeActivity(String session, int ID){
-        DatabaseHandler db = new DatabaseHandler(this);
-        Log.e("SESSION","Inserting..");
-        db.addSession(new ASession(1, session));
-
-        Log.e("SESSION","Reading all sessions..");
-        List<ASession> sessions = db.getAllSessions();
-        for (ASession as : sessions) {
-            String log = "Id: "+as.getID()+" ,Name: " + as.getSession();
-            Log.e("SESSION", "Session: ");
-            Log.e("SESSION", log);
-        }
-        Log.e("SESSION", getBaseContext().getDatabasePath("successSessions").getAbsolutePath());
+    public void navigatetoHomeActivity(String TOKEN){
         Intent homeIntent = new Intent(getApplicationContext(),MainActivity.class);
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        homeIntent.putExtra("ID", ID);
+        homeIntent.putExtra("TOKEN", TOKEN);
         startActivity(homeIntent);
     }
 

@@ -24,6 +24,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
     private FragmentTransaction fg;
     private TextView userName;
     private TextView userSubtitle;
+    private TextView userSubcribes;
     private boolean mIsAvatarShown = true;
 
     private TextView companyName;
@@ -69,8 +71,8 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
         Intent getId = getIntent();
 
 
-        int id = getId.getIntExtra("ID",0);
-        params.put("id", 2);
+        String TOKEN = getId.getStringExtra("TOKEN");
+        params.put("token", TOKEN);
 
         userName = (TextView) findViewById(R.id.user_name);
         userSubtitle = (TextView) findViewById(R.id.user_subtitle);
@@ -165,19 +167,23 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
 
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get("https://uniteddev.pw/api.php?target=company", params, new JsonHttpResponseHandler() {
+        client.get("http://195.19.44.155/anton/core/api.php?action=GetInfoAboutUser", params, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONObject obj) {
                 // Hide Progress Dialog
                 prgDialog.hide();
                 try {
 
-                    companyName = (TextView) viewPager.findViewById(R.id.company_name);
-                    companyDesc = (TextView) viewPager.findViewById(R.id.company_shortdesc);
-                    companyLongDesc = (TextView) viewPager.findViewById(R.id.company_longdesc);
+                    userSubcribes = (TextView) findViewById(R.id.subscribes);
+                    userName = (TextView) findViewById(R.id.user_name);
+                    userSubtitle = (TextView) findViewById(R.id.user_subtitle);
+                    String json = obj.getString("apimessage");
+                    JSONObject infoUser = obj.getJSONObject("apimessage");
 
-                    companyName.setText("-"+obj.getString("name")+" -");
-                    companyDesc.setText(obj.getString("shortdesc"));
-                    companyLongDesc.setText(obj.getString("desc"));
+
+                    userName.setText(infoUser.getString("first_name")+infoUser.getString("last_name"));
+                    userSubcribes.setText(infoUser.getString("followers"));
+
+
 
 
 

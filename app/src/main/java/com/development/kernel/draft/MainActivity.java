@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int countOfImageViews = 0;
     private int countOfCardViews = 0;
     private int ID;
-    private int ID_USER;
+    private String TOKEN_USER;
     private Object tag;
     private EditText editText;
     private EditText editText1;
@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent1 = getIntent();
-        ID_USER = intent1.getIntExtra("ID",0);
-        Log.d("Id_User1",String.valueOf(ID_USER));
+        TOKEN_USER = intent1.getStringExtra("TOKEN");
+        Log.d("Id_User1",String.valueOf(TOKEN_USER));
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         switch (id) {
                             case R.id.first:
                                 intent = new Intent(MainActivity.this, ProfileActivity.class);
-                                intent.putExtra("ID",ID_USER);
+                                intent.putExtra("TOKEN",TOKEN_USER);
                                 startActivity(intent);
 
                                 break;

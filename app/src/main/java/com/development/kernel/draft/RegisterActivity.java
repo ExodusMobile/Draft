@@ -79,11 +79,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             // When Email entered is Valid
 
                 // Put Http parameter name with value of Name Edit View control
-                params.put("name", name);
+                params.put("login", name);
                 // Put Http parameter username with value of Email Edit View control
-                params.put("username", email);
+                params.put("email", email);
                 // Put Http parameter password with value of Password Edit View control
                 params.put("password", password);
+                params.put("last_name", "fff");
+                params.put("first_name", "fff3");
 
                 invokeWS(params);
             // When Email is invalid
@@ -100,16 +102,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void invokeWS(RequestParams params){
         // Show Progress Dialog
         prgDialog.show();
+        params.put("useapi",1);
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://195.19.44.155/anton/index.php?method=register", params, new JsonHttpResponseHandler() {
+        client.get("http://195.19.44.155/anton/core/api.php?action=Registration", params, new JsonHttpResponseHandler() {
             // When the response returned by REST has Http response code '200'
 
             public void onSuccess(int statusCode, Header[] headers, JSONObject obj) {
                 // Hide Progress Dialog
                 prgDialog.hide();
                 try {
-                    if (obj.getBoolean("status")) {
+                    if (obj.getInt("code")==19) {
                         // Set Default Values for Edit View controls
                         setDefaultValues();
 

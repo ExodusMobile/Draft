@@ -8,10 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Anton on 18.02.2017.
- */
-
 public class AdditInfoFragment extends Fragment implements View.OnClickListener {
 
     @Nullable

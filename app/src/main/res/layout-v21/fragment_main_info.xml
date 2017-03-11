@@ -59,16 +59,18 @@
                         android:hint="Описание компании"
                         android:background="@drawable/edit_text_style"/>
                     <Button
-                        android:id="@+id/btnCreateCompany"
+                        android:id="@+id/btnRegister"
                         android:layout_marginTop="40dp"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="#7db343"
                         android:onClick="registerUser"
-                        android:text="Создать команию"
+                        android:text="Создать компанию"
                         android:textColor="#fff" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,7 +87,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_height="wrap_content"
-                    android:text="Создайте свою компанию!"
+                    android:text="Ваш профиль пустует... Давайте его заполним!"
                     android:textAlignment="center"/>
                 <ImageView
                     android:layout_width="match_parent"
@@ -118,7 +120,7 @@
                     android:hint="Описание компании"
                     android:background="@drawable/edit_text_style"/>
                 <Button
-                    android:id="@+id/btnRegister"
+                    android:id="@+id/btnSubmit"
                     android:layout_marginTop="40dp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

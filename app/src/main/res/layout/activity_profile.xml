@@ -79,6 +79,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                     android:text="[UserSubtitleOrCompanyName]"
                     android:textColor="@android:color/white" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -86,38 +87,67 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:background="@drawable/background_style"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="67dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1">
+
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Подписчики"
-                            android:layout_marginLeft="20dp"/>
+                            android:text="Подписчики |"
+                            android:paddingTop="2dp"
+
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="4dp"
+                            android:textColor="#6e6e6e"
+                            android:textAlignment="textStart"
+                            android:id="@+id/textView" />
+
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            android:id="@+id/subscribes"
+                            android:text="0"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="4dp"
+                            android:textColor="#6e6e6e"
+                            android:textAlignment="textStart" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="90dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/background_style"
+                        android:layout_weight="1">
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textAlignment="viewEnd"
-                            android:text="Подписчики"
-                            android:layout_marginLeft="20dp"/>
+                            android:text="Друзья |"
+                            android:paddingTop="2dp"
+
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="4dp"
+                            android:textColor="#6e6e6e"
+                            android:textAlignment="textStart"
+                           />
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            android:id="@+id/friends"
+                            android:text="0"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="4dp"
+                            android:textColor="#6e6e6e"
+                            android:textAlignment="textStart" />
                     </LinearLayout>
-
-
                 </LinearLayout>
                 ​
             </LinearLayout>
