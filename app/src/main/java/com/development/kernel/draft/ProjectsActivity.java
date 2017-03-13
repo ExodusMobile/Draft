@@ -9,19 +9,24 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.impl.entity.LaxContentLengthStrategy;
 
 public class ProjectsActivity extends AppCompatActivity {
     private Intent intent;
@@ -99,13 +104,36 @@ public class ProjectsActivity extends AppCompatActivity {
                     while(i<5){
                         JSONObject project = projectUser.getJSONObject(String.valueOf(i));
                         CardView projectCard = new CardView(getApplicationContext());
-                        projectCard.setCardBackgroundColor(Color.WHITE);
+                        projectCard.setBackgroundColor(Color.WHITE);
                         projectCard.setMinimumWidth(1080);
-                        projectCard.setMinimumHeight(500);
+                        projectCard.setMinimumHeight(600);
+
+                        LinearLayout LLC = new LinearLayout(getApplicationContext());
+                        LLC.setOrientation(LinearLayout.VERTICAL);
+                        projectCard.addView(LLC);
+                        RelativeLayout Header = new RelativeLayout(getApplicationContext());
+
+                        LinearLayout Cellar = new LinearLayout(getApplicationContext());
+                        Cellar.setOrientation(LinearLayout.VERTICAL);
+                        LLC.addView(Header);
+                        LLC.addView(Cellar);
+                        ImageView projectLogo = new ImageView(getApplicationContext());
+                        Picasso.with(getApplicationContext())
+                                .load(R.drawable.material_design)
+                                .resize(1080, 500)
+                                .into(projectLogo);
+
+                        Header.addView(projectLogo);
                         TextView textView = new TextView(getApplicationContext());
                         textView.setTextColor(Color.GRAY);
                         textView.setText(project.getString("NameOfProject"));
-                        projectCard.addView(textView);
+                        Cellar.addView(textView);
+                        TextView edit = new TextView(getApplicationContext());
+                        edit.setText("Test project");
+                        edit.setTextColor(Color.WHITE);
+
+                        Header.addView(edit);
+
                         //--------------------------------------\\
                         projectCard.setLayoutParams(layoutParams);
                         linearLayoutProjects.addView(projectCard);
