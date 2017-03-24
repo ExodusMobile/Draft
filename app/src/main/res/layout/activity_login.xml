@@ -104,7 +104,7 @@
             android:layout_gravity="bottom"
             android:background="#45bdcb"
             android:textColor="#FFFFFF"
-            android:text="Вход через FACEBOOK"
+            android:text="Вход через FACEBOOK (В разработке)"
             android:layout_marginTop="40dp"/>
     </LinearLayout>
 </LinearLayout>

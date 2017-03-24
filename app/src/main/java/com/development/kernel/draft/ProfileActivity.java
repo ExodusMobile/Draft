@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.util.Calendar;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -15,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+
 import cz.msebera.android.httpclient.Header;
 
 public class ProfileActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
@@ -37,7 +41,7 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
     private DrawerLayout mDrawerLayout;
     private Fragment fragment;
     private FragmentTransaction fg;
-    private TextView userName;
+    public TextView userName;
     private TextView userSubtitle;
     private TextView userSubcribes;
     private boolean mIsAvatarShown = true;
@@ -55,6 +59,7 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
     final String SAVED_SUBTITLE = "userSubtitle";
 
     private ProgressDialog prgDialog;
+    public String TOKEN;
 
 
     @Override
@@ -71,14 +76,11 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
         Intent getId = getIntent();
 
 
-        String TOKEN = getId.getStringExtra("TOKEN");
-        params.put("token", TOKEN);
+        TOKEN = getId.getStringExtra("TOKEN");
+
 
         userName = (TextView) findViewById(R.id.user_name);
         userSubtitle = (TextView) findViewById(R.id.user_subtitle);
-
-
-
 
         TabLayout tabs = (TabLayout) findViewById(R.id.materialup_tabs);
         viewPager  = (ViewPager) findViewById(R.id.materialup_viewpager);
@@ -119,24 +121,36 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
                                 break;
                             case R.id.second:
                                 intent = new Intent(ProfileActivity.this, ProjectsActivity.class);
+                                intent.putExtra("TOKEN",TOKEN);
                                 startActivity(intent);
+                                finish();
                                 break;
                             case R.id.third:
                                 intent = new Intent(ProfileActivity.this, MainActivity.class);
+                                intent.putExtra("TOKEN",TOKEN);
                                 startActivity(intent);
+                                finish();
                                 break;
                             case R.id.settings:
                                 intent = new Intent(ProfileActivity.this, SettingsActivity.class);
+                                intent.putExtra("TOKEN",TOKEN);
                                 startActivity(intent);
+                                finish();
+                                break;
+                            case R.id.exit:
+                                intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
                                 break;
                         }
-                        finish();
                         return true;
                     }
                 });
     }
 
+    public static void getCompanyID(){
 
+    }
 
 
     @Override
@@ -161,35 +175,43 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
     }
 
 
-    public void invokeWS(RequestParams params){
+    public void invokeWS(RequestParams params) {
         // Show Progress Dialog
         prgDialog.show();
 
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get("http://195.19.44.155/anton/core/api.php?action=GetInfoAboutUser", params, new JsonHttpResponseHandler() {
+        client.get("http://195.19.44.155/anton/core/api.php?action=GetInfoAboutUser&token=" + TOKEN, params, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONObject obj) {
                 // Hide Progress Dialog
                 prgDialog.hide();
                 try {
-
-                    userSubcribes = (TextView) findViewById(R.id.subscribes);
-                    userName = (TextView) findViewById(R.id.user_name);
-                    userSubtitle = (TextView) findViewById(R.id.user_subtitle);
                     String json = obj.getString("apimessage");
                     JSONObject infoUser = obj.getJSONObject("apimessage");
 
+                    boolean checkForCompany = false;
+                    int companyID = infoUser.getInt("company");
+                    if(companyID != 0){
+                        checkForCompany = true;
+                        Log.d("хммм","jdfj4342");
+                    }
+                    Log.d("хммм",TOKEN);
+                    MainInfoFragment.newInstance(TOKEN, checkForCompany, companyID);
+                    AdditInfoFragment.newInstance(TOKEN, companyID);
+                    userSubcribes = (TextView) findViewById(R.id.subscribes);
+                    userName = (TextView) findViewById(R.id.user_name);
+                    userSubtitle = (TextView) findViewById(R.id.user_subtitle);
 
-                    userName.setText(infoUser.getString("first_name")+infoUser.getString("last_name"));
+                    long time = Long.valueOf(infoUser.getString("created_at"));
+                    userName.setText(infoUser.getString("login"));
+                    userSubtitle.setText(String.format("%02d:%02d:%02d", time / 3600, time / 60 % 60, time % 60));
                     userSubcribes.setText(infoUser.getString("followers"));
-
-
-
 
 
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
-                    Toast.makeText(getApplicationContext(), "Сервер Json не отвечает!", Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(getApplicationContext(), "Сервер не отвечает!", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
 
                 }
@@ -214,6 +236,10 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
                 }
             }
         });
+
+    }
+    public String getTOKEN() {
+        return TOKEN;
     }
     class TabsAdapter extends FragmentPagerAdapter {
         public TabsAdapter(FragmentManager fm) {

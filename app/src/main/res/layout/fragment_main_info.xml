@@ -13,8 +13,54 @@
             android:orientation="vertical">
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:elevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:background="#98ffea00">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="5"
+                            android:background="#c9b902" />
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginBottom="45dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/ic_info" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textColor="#202020"
+                        android:textSize="15dp"
+                        android:alpha="1"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="20dp"
+                        android:textAlignment="textStart"
+                        android:text="@string/help_3"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/create_company_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -35,6 +81,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/line"/>
                     <EditText
+                        android:id="@+id/companyName"
                         android:layout_width="match_parent"
                         android:layout_marginTop="20dp"
                         android:layout_marginLeft="30dp"
@@ -47,6 +94,7 @@
                         android:hint="Название компании"
                         android:background="@drawable/edit_text_style"/>
                     <EditText
+                        android:id="@+id/companyDescription"
                         android:layout_width="match_parent"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="30dp"
@@ -65,70 +113,51 @@
                         android:layout_height="wrap_content"
                         android:background="#7db343"
                         android:onClick="registerUser"
-                        android:text="Создать команию"
+                        android:text="Создать компанию"
                         android:textColor="#fff" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
+                android:id="@+id/company_card"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:elevation="5dp">
+                android:elevation="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:textSize="30sp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_height="wrap_content"
-                    android:text="Создайте свою компанию!"
-                    android:textAlignment="center"/>
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/line"/>
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:paddingTop="7dp"
-                    android:paddingBottom="7dp"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Название компании"
-                    android:background="@drawable/edit_text_style"/>
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:paddingTop="7dp"
-                    android:paddingBottom="7dp"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Описание компании"
-                    android:background="@drawable/edit_text_style"/>
-                <Button
-                    android:id="@+id/btnRegister"
-                    android:layout_marginTop="40dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#7db343"
-                    android:onClick="registerUser"
-                    android:text="Создать команию"
-                    android:textColor="#fff" />
-                </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="[Название компании]"
+                        android:id="@+id/companyNameInfo"
+                        android:textAlignment="center"
+                        android:textSize="30dp" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/line"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="[Описание компании]"
+                        android:id="@+id/companyDescriptionInfo"
+                        android:textSize="20sp"
+                        android:textAlignment="center"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/companyDetributorInfo"
+                        android:text="[Владелец компании.]"
+                        android:textSize="15sp"
+                        android:textAlignment="center"/>
 
+                </LinearLayout>
             </android.support.v7.widget.CardView>
+
+
 
         </LinearLayout>
 

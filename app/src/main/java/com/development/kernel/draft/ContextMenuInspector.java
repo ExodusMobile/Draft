@@ -1,5 +1,7 @@
 package com.development.kernel.draft;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.view.ContextMenu;
@@ -53,6 +55,7 @@ class ContextMenuInspector {
         return menu;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     void setContextMenuItemsOptions(MenuItem item, Object tag, TextView[] textViews, ImageView[] imageViews,
                                     Button[] buttons, CardView[] cardViews, int ID, EditText editText,
                                     EditText editText1, Button button, Button button_close, LinearLayout editField,
@@ -93,7 +96,6 @@ class ContextMenuInspector {
                     editText.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT);
                     editText.setHint("Пример ввода - \"#990061\"");
                     editText.setText("");
-;
                     break;
                 case 5:
                     textViews[ID].setVisibility(View.GONE);
@@ -187,7 +189,6 @@ class ContextMenuInspector {
                     cardViews[ID].setVisibility(View.GONE);
                     break;
             }
-
         }
     }
 }

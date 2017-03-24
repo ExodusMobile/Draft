@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.graphics.Color;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -90,28 +94,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new NavigationView.OnNavigationItemSelectedListener() {
 
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         menuItem.setChecked(true);
                         int id = menuItem.getItemId();
+
                         switch (id) {
                             case R.id.first:
                                 intent = new Intent(MainActivity.this, ProfileActivity.class);
                                 intent.putExtra("TOKEN",TOKEN_USER);
                                 startActivity(intent);
-
+                                finish();
                                 break;
                             case R.id.second:
                                 intent = new Intent(MainActivity.this, ProjectsActivity.class);
+                                intent.putExtra("TOKEN",TOKEN_USER);
                                 startActivity(intent);
+                                finish();
                                 break;
                             case R.id.third:
                                 break;
                             case R.id.settings:
                                 intent = new Intent(MainActivity.this, SettingsActivity.class);
+                                intent.putExtra("TOKEN",TOKEN_USER);
                                 startActivity(intent);
+                                finish();
+                                break;
+                            case R.id.exit:
+                                intent = new Intent(MainActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
                                 break;
                         }
                         // Closing drawer on item click
+
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
@@ -202,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         viewInspector.setContextOptions(item);
@@ -238,9 +254,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (resultCode == RESULT_OK) {
                         Uri selectedImage = imageReturnedIntent.getData();
                         selectImagePublic = selectedImage;
+                        MainActivity m = new MainActivity();
+                        Display display = m.getWindowManager().getDefaultDisplay();
+                        int width = display.getWidth();  // deprecated
                         Picasso.with(this)
                                 .load(selectedImage)
-                                .resize(800, 900)
+                                .resize(width, 700)
                                 .into(imageViews[ID]);
                     }
                     break;
@@ -258,15 +277,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (resultCode == RESULT_OK) {
                         Uri selectedImage = imageReturnedIntent.getData();
                         selectImagePublic = selectedImage;
+                        Display display = getWindowManager().getDefaultDisplay();
+                        int width = display.getWidth();  // deprecated
+                        // deprecated
                         Picasso.with(this)
                                 .load(selectedImage)
-                                .resize(1080, 700)
+                                .resize(width, 700)
                                 .into(headerImage);
                     }
                     break;
             }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public void onClick(View view) {
         floatingActionsMenu.collapse();

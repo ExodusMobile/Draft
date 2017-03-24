@@ -5,8 +5,8 @@
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DRAFT</string>
-    <string name="start_text">Это ваш холст, здесь вы можете добавлять кнопки, строки, картинки, макетный область и так далее. Дайте волю вашему воображению и сделайте дизайн-документ вашего проекта!</string>
-    <string name="hint_text">Чтобо создать новый элемент, нажмите 3 точки в правом верхнем углу и выберете элемент, который хотите создать!</string>
+    <string name="start_text">Это ваш холст, здесь вы можете добавлять кнопки, строки, картинки, макетную область и так далее. Дайте волю вашему воображению и сделайте дизайн-документ вашего проекта!</string>
+    <string name="hint_text">Чтобы создать новый элемент, нажмите 3 точки в правом верхнем углу и выберете элемент, который хотите создать!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_home">HomeActivity</string>
@@ -17,5 +17,10 @@
     <string name="pwd">Пароль</string>
     <string name="btnRegister">Зарегистрироваться</string>
     <string name="title_auth">Авторизация</string>
-    <string name="version_name"><u>Pre-Alpha 0.1 Insider Release</u></string>
+    <string name="version_name"><u>Pre-Beta 0.4 Public BETA Release</u></string>
+    <string name="title_activity_project_info">ProjectInfoActivity</string>
+    <string name="help_1">Описание вашего проекта находится именно здесь, если вы хотите что-то изменить то заходите в ваш профиль.</string>
+    <string name="help_2">Этот раздел все еще находится в разработке, пожалуйста не нервничайте, возможно завтра он уже будет =)</string>
+    <string name="help_3">Чтобы выкладывать свои проекты, вы должны создать свою компанию. Не бойтесь, вас это ни к чему не обязывает.</string>
+    <string name="help_4">После того, как вы создали компанию, вы можете создать проект и заявить о нем все пользователем <font><b>Draft</b></font> :D</string>
 </resources>

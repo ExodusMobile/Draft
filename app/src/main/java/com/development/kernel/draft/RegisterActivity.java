@@ -36,10 +36,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText pwdET;
 
     private SharedPreferences sPref;
-    final String SAVED_NAME = "userName";
-    final String SAVED_SUBTITLE = "userSubtitle";
-
-    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +55,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         prgDialog.setMessage("Пожалуйста, подождите...");
         // Set Cancelable as False
         prgDialog.setCancelable(false);
-        button = (Button) findViewById(R.id.btnLinkToLoginScreen);
-        button.setOnClickListener(this);
+        Button goToLoginScrenn = (Button) findViewById(R.id.btnLinkToLoginScreen);
+        goToLoginScrenn.setOnClickListener(this);
 
     }
     public void registerUser(View view){

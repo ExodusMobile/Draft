@@ -2,6 +2,7 @@ package com.development.kernel.draft;
 
 import android.content.Intent;
 import android.media.audiofx.BassBoost;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -31,7 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     // This method will trigger on item Click of navigation menu
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         // Set item in checked state
 
                         menuItem.setChecked(true);
@@ -51,6 +52,11 @@ public class SettingsActivity extends AppCompatActivity {
                             case R.id.settings:
                                 intent = new Intent(SettingsActivity.this, SettingsActivity.class);
                                 startActivity(intent);
+                                break;
+                            case R.id.exit:
+                                intent = new Intent(SettingsActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
                                 break;
                         }
                         finish();

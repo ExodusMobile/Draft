@@ -11,29 +11,31 @@ import android.widget.LinearLayout;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener{
 
-    LinearLayout linearLayout;
+    private StartThreadIntent startThreadIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        linearLayout = (LinearLayout) findViewById(R.id.activity_start);
-        linearLayout.setOnClickListener(this);
+        LinearLayout MainScreen = (LinearLayout) findViewById(R.id.activity_start);
+        MainScreen.setOnClickListener(this);
 
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_draft);
         ImageView draft_sticker = (ImageView) findViewById(R.id.draft);
         draft_sticker.startAnimation(animation);
 
-        StartThreadIntent startThreadIntent = new StartThreadIntent(this);
+         startThreadIntent = new StartThreadIntent(this);
         startThreadIntent.start();
 
     }
 
     @Override
     public void onClick(View view) {
+        startThreadIntent.interrupt();
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
         this.finish();
+
     }
 
     class StartThreadIntent extends Thread {

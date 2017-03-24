@@ -13,9 +13,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -31,7 +33,6 @@ import android.widget.Toast;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.squareup.picasso.Picasso;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 class ViewInspector {
 
@@ -157,7 +158,7 @@ class ViewInspector {
         Notification.Builder builder = new Notification.Builder(context);
 
         builder.setContentIntent(contentIntent)
-                .setSmallIcon(R.drawable.com_facebook_button_icon)
+                .setSmallIcon(R.drawable.ic_done_white_64dp_2x)
                 // большая картинка
                 .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
                 //.setTicker(res.getString(R.string.warning)) // текст в строке состояния
@@ -207,6 +208,7 @@ class ViewInspector {
         return button; //возвратить view элемент со всеми настройками
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     TextView setPropertiesForView(TextView textView, EditText editText, Button buttonEdit)//настройки для строки
     {
         switch (WIS)
@@ -224,7 +226,11 @@ class ViewInspector {
                 }
                 break;
             case 3:
-                textView.setMinimumWidth(1080);
+                MainActivity m = new MainActivity();
+                Display display = m.getWindowManager().getDefaultDisplay();
+                int width = display.getWidth();  // deprecated
+                int height = display.getHeight();  // deprecated
+                textView.setMinimumWidth(width);
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 textView.setText(textView.getText().toString());
                 break;
@@ -306,7 +312,7 @@ class ViewInspector {
                     cardView.setBackgroundColor(Color.parseColor(editText.getText().toString()));
                 }
                 catch (Exception e){
-                    Toast.makeText(mainActivity,"Неверный формат ввода", Toast.LENGTH_SHORT);
+                    Toast.makeText(mainActivity,"Неверный формат ввода", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 4:
